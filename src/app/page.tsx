@@ -1,11 +1,8 @@
-import { connectDB } from '@/lib/mongodb';
+import { AddPoll } from './AddPoll';
+import { getPolls } from '@/services/polls';
 
 export default async function Home() {
-  const client = await connectDB();
-
-  const pollsCollection = client.db().collection('polls');
-
-  const polls = await pollsCollection.find().toArray();
+  const polls = await getPolls();
 
   return (
     <main>
@@ -15,6 +12,7 @@ export default async function Home() {
           <li key={poll._id.toString()}>{JSON.stringify(poll)}</li>
         ))}
       </ul>
+      <AddPoll />
     </main>
   );
 }
