@@ -1,4 +1,13 @@
 import { connectDB } from '@/lib/mongodb';
+import { ObjectId } from 'mongodb';
+
+export async function getPoll(id: string) {
+  const client = await connectDB();
+  return client
+    .db()
+    .collection('polls')
+    .findOne({ _id: new ObjectId(id) });
+}
 
 export async function getPolls() {
   const client = await connectDB();

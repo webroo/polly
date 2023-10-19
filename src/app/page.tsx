@@ -1,4 +1,4 @@
-import { AddPoll } from './AddPoll';
+import Link from 'next/link';
 import { getPolls } from '@/services/polls';
 
 export default async function Home() {
@@ -6,13 +6,12 @@ export default async function Home() {
 
   return (
     <main>
-      <h1>Polls:</h1>
-      <ul>
-        {polls.map(poll => (
-          <li key={poll._id.toString()}>{JSON.stringify(poll)}</li>
-        ))}
-      </ul>
-      <AddPoll />
+      <div>
+        <Link href="/polls">View polls</Link>
+      </div>
+      <div>
+        <Link href="/polls/new">Add poll</Link>
+      </div>
     </main>
   );
 }
