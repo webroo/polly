@@ -19,3 +19,12 @@ export async function createPoll(poll: any) {
   const { insertedId } = await client.db().collection('polls').insertOne(poll);
   return { _id: insertedId, ...poll };
 }
+
+export async function updatePoll(id: string, poll: any) {
+  const client = await connectDB();
+  await client
+    .db()
+    .collection('polls')
+    .replaceOne({ _id: new ObjectId(id) }, poll);
+  return { _id: id, ...poll };
+}
