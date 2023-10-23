@@ -8,15 +8,19 @@
 
     `npm install`
 
-3. Start MongoDB via Docker:
+3. Create a copy of the example local .env file:
+
+    `cp .env.local.example .env.local`
+
+4. Start MongoDB via Docker:
 
     `docker compose up`
 
-4. Run the development server:
+5. Run the development server:
 
     `npm run dev`
 
-5. Open [http://localhost:3000](http://localhost:3000) to see the site.
+6. Open [http://localhost:3000](http://localhost:3000) to see the site.
 
 ## MongoDB admin interface
 
