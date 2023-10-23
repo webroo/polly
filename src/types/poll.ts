@@ -1,22 +1,20 @@
-import { ObjectId } from 'mongodb';
-
-export interface PollOptionModel {
-  _id: ObjectId;
-  name: string;
-}
-
-export interface ParticipantModel {
-  _id: ObjectId;
-  name: string;
-  selectedOptions: string[];
-}
-
 export interface PollModel {
-  _id: ObjectId;
+  id: string;
   title: string;
   description: string;
   options: PollOptionModel[];
   participants: ParticipantModel[];
+}
+
+export interface PollOptionModel {
+  id: string;
+  name: string;
+}
+
+export interface ParticipantModel {
+  id: string;
+  name: string;
+  selectedOptions: string[];
 }
 
 export interface NewPoll {

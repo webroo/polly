@@ -8,8 +8,8 @@ export default async function Polls() {
     <main>
       <ul>
         {polls.map(poll => (
-          <li key={poll._id.toString()}>
-            <Link href={`/polls/${poll._id}`}>{JSON.stringify(poll)}</Link>
+          <li key={poll.id}>
+            <Link href={`/polls/${poll.id}`}>{poll.title}</Link>
           </li>
         ))}
       </ul>

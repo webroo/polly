@@ -1,6 +1,5 @@
 import { addParticipant } from '@/services/polls';
-import { NewParticipant, ParticipantModel } from '@/types/poll';
-import { ObjectId } from 'mongodb';
+import { NewParticipant } from '@/types/poll';
 
 export async function POST(
   request: Request,
@@ -8,16 +7,11 @@ export async function POST(
 ) {
   const body: NewParticipant = await request.json();
 
-  const newParticipant: ParticipantModel = {
-    _id: new ObjectId(),
-    name: body.name,
-    selectedOptions: body.selectedOptions,
-  };
-
-  const createdParticipant = await addParticipant(
-    new ObjectId(params.pollId),
-    newParticipant,
+  const participant = await addParticipant(
+    params.pollId,
+    body.name,
+    body.selectedOptions,
   );
 
-  return Response.json(createdParticipant);
+  return Response.json(participant);
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { NewPoll } from '@/types/poll';
+import { NewPoll, PollModel } from '@/types/poll';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 
@@ -14,7 +14,7 @@ export default function NewPollPage() {
     const formData = new FormData(event.currentTarget);
 
     const newPoll: NewPoll = {
-      title: String(formData.get('title')?.toString()),
+      title: String(formData.get('title')),
       description: String(formData.get('description')),
       options: formData.getAll('options').map(String),
     };
@@ -23,9 +23,10 @@ export default function NewPollPage() {
       method: 'POST',
       body: JSON.stringify(newPoll),
     });
-    const poll = await response.json();
 
-    router.push(`/polls/${poll._id}`);
+    const poll: PollModel = await response.json();
+
+    router.push(`/polls/${poll.id}`);
   }
 
   return (

@@ -21,7 +21,7 @@ export default function PollTable({ poll }: PollTableProps) {
       selectedOptions: formData.getAll('selectedOptions').map(String),
     };
 
-    await fetch(`/api/polls/${poll._id}/participants`, {
+    await fetch(`/api/polls/${poll.id}/participants`, {
       method: 'POST',
       body: JSON.stringify(newParticipant),
     });
@@ -31,9 +31,7 @@ export default function PollTable({ poll }: PollTableProps) {
 
   const totals = poll.options.map(option => {
     return poll.participants.reduce((sum, participant) => {
-      return participant.selectedOptions.includes(option._id.toString())
-        ? sum + 1
-        : sum;
+      return participant.selectedOptions.includes(option.id) ? sum + 1 : sum;
     }, 0);
   });
 
@@ -46,17 +44,17 @@ export default function PollTable({ poll }: PollTableProps) {
           <tr>
             <th></th>
             {poll.options.map(option => (
-              <th key={option._id.toString()}>{option.name}</th>
+              <th key={option.id}>{option.name}</th>
             ))}
           </tr>
         </thead>
         <tbody>
           {poll.participants.map(participant => (
-            <tr key={participant._id.toString()}>
+            <tr key={participant.id}>
               <td>{participant.name}</td>
               {poll.options.map(option => (
-                <td key={option._id.toString()}>
-                  {participant.selectedOptions.includes(option._id.toString())
+                <td key={option.id}>
+                  {participant.selectedOptions.includes(option.id)
                     ? 'YES'
                     : 'NO'}
                 </td>
@@ -69,11 +67,11 @@ export default function PollTable({ poll }: PollTableProps) {
               Your name: <input name="name" />
             </td>
             {poll.options.map(option => (
-              <td key={option._id.toString()}>
+              <td key={option.id}>
                 <input
                   type="checkbox"
                   name="selectedOptions"
-                  value={option._id.toString()}
+                  value={option.id}
                 />
               </td>
             ))}
