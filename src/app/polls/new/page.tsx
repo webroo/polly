@@ -1,9 +1,10 @@
 'use client';
 
+import { NewPoll } from '@/types/poll';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 
-export default function NewPoll() {
+export default function NewPollPage() {
   const router = useRouter();
   const [maxOptions, setMaxOptions] = useState(5);
 
@@ -12,17 +13,15 @@ export default function NewPoll() {
 
     const formData = new FormData(event.currentTarget);
 
-    const formDataObj = Array.from(formData.keys()).reduce(
-      (result, key) => ({
-        ...result,
-        [key]: result[key] ? formData.getAll(key) : formData.get(key),
-      }),
-      {} as Record<string, FormDataEntryValue | FormDataEntryValue[] | null>,
-    );
+    const newPoll: NewPoll = {
+      title: String(formData.get('title')?.toString()),
+      description: String(formData.get('description')),
+      options: formData.getAll('options').map(String),
+    };
 
     const response = await fetch('/api/polls', {
       method: 'POST',
-      body: JSON.stringify(formDataObj),
+      body: JSON.stringify(newPoll),
     });
     const poll = await response.json();
 
@@ -34,7 +33,7 @@ export default function NewPoll() {
       <form onSubmit={onSubmit}>
         <label>
           Poll name:
-          <input name="name" required />
+          <input name="title" required />
         </label>
         <label>
           Additional information (optional):

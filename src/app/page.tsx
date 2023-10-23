@@ -1,9 +1,6 @@
 import Link from 'next/link';
-import { getPolls } from '@/services/polls';
 
-export default async function Home() {
-  const polls = await getPolls();
-
+export default async function HomePage() {
   return (
     <main>
       <div>
