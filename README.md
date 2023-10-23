@@ -1,3 +1,8 @@
+## Prerequisites
+
+- Node 18 (preferably via [nvm](https://github.com/nvm-sh/nvm))
+- Docker (for local development)
+
 ## Getting Started
 
 1. Use [nvm](https://github.com/nvm-sh/nvm) to load the correct version of Node for the project:
