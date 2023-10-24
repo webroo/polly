@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { getPoll } from '@/services/polls';
 import PollTable from './PollTable';
 
@@ -9,8 +10,7 @@ export default async function PollPage({
   const poll = await getPoll(params.pollId);
 
   if (!poll) {
-    // TODO redirect to 404 page
-    throw new Error('Poll not found');
+    notFound();
   }
 
   return (
