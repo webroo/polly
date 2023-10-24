@@ -1,37 +1,20 @@
 'use client';
 
-import { NewPoll, PollModel } from '@/types/poll';
-import { useRouter } from 'next/navigation';
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
+import { redirect } from 'next/navigation';
+import { createPollAction } from '@/actions/polls';
 
 export default function NewPollPage() {
-  const router = useRouter();
   const [maxOptions, setMaxOptions] = useState(5);
 
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const formData = new FormData(event.currentTarget);
-
-    const newPoll: NewPoll = {
-      title: String(formData.get('title')),
-      description: String(formData.get('description')),
-      options: formData.getAll('options').map(String),
-    };
-
-    const response = await fetch('/api/polls', {
-      method: 'POST',
-      body: JSON.stringify(newPoll),
-    });
-
-    const poll: PollModel = await response.json();
-
-    router.push(`/polls/${poll.id}`);
+  async function onFormAction(formData: FormData) {
+    const poll = await createPollAction(formData);
+    redirect(`/polls/${poll.id}`);
   }
 
   return (
     <main>
-      <form onSubmit={onSubmit}>
+      <form action={onFormAction}>
         <label>
           Poll name:
           <input name="title" required />

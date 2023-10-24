@@ -1,17 +1,17 @@
 import { connectDB } from '@/lib/mongodb';
 import { uniqueid } from '@/lib/uniqueid';
-import { ParticipantModel, PollModel, PollOptionModel } from '@/types/poll';
+import { PollParticipant, Poll } from '@/types/poll';
 
-export async function getPoll(id: string): Promise<PollModel | null> {
+export async function getPoll(id: string): Promise<Poll | null> {
   return (await connectDB())
     .collection('polls')
-    .findOne<PollModel>({ id }, { projection: { _id: 0 } });
+    .findOne<Poll>({ id }, { projection: { _id: 0 } });
 }
 
-export async function getPolls(): Promise<PollModel[]> {
+export async function getPolls(): Promise<Poll[]> {
   return (await connectDB())
     .collection('polls')
-    .find<PollModel>({}, { projection: { _id: 0 } })
+    .find<Poll>({}, { projection: { _id: 0 } })
     .toArray();
 }
 
@@ -19,8 +19,8 @@ export async function createPoll(
   title: string,
   description: string,
   options: string[],
-): Promise<PollModel> {
-  const poll: PollModel = {
+): Promise<Poll> {
+  const poll: Poll = {
     id: uniqueid(),
     title,
     description,
@@ -41,8 +41,8 @@ export async function addParticipant(
   pollId: string,
   name: string,
   selectedOptions: string[],
-): Promise<ParticipantModel> {
-  const participant: ParticipantModel = {
+): Promise<PollParticipant> {
+  const participant: PollParticipant = {
     id: uniqueid(),
     name,
     selectedOptions,

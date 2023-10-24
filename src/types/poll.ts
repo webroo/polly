@@ -1,29 +1,18 @@
-export interface PollModel {
+export interface Poll {
   id: string;
   title: string;
   description: string;
-  options: PollOptionModel[];
-  participants: ParticipantModel[];
+  options: PollOption[];
+  participants: PollParticipant[];
 }
 
-export interface PollOptionModel {
+export interface PollOption {
   id: string;
   name: string;
 }
 
-export interface ParticipantModel {
+export interface PollParticipant {
   id: string;
-  name: string;
-  selectedOptions: string[];
-}
-
-export interface NewPoll {
-  title: string;
-  description: string;
-  options: string[];
-}
-
-export interface NewParticipant {
   name: string;
   selectedOptions: string[];
 }

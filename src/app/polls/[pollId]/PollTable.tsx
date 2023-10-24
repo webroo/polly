@@ -1,35 +1,17 @@
 'use client';
 
-import { NewParticipant, PollModel } from '@/types/poll';
-import { useRouter } from 'next/navigation';
-import { FormEvent } from 'react';
+import { useRef } from 'react';
+import { addParticipantAction } from '@/actions/polls';
+import { Poll } from '@/types/poll';
 
 interface PollTableProps {
-  poll: PollModel;
+  poll: Poll;
 }
 
 export default function PollTable({ poll }: PollTableProps) {
-  const router = useRouter();
+  const formRef = useRef<HTMLFormElement>(null);
 
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const formData = new FormData(event.currentTarget);
-
-    const newParticipant: NewParticipant = {
-      name: String(formData.get('name')),
-      selectedOptions: formData.getAll('selectedOptions').map(String),
-    };
-
-    await fetch(`/api/polls/${poll.id}/participants`, {
-      method: 'POST',
-      body: JSON.stringify(newParticipant),
-    });
-
-    router.refresh();
-  }
-
-  const totals = poll.options.map(option => {
+  const totals: number[] = poll.options.map(option => {
     return poll.participants.reduce((sum, participant) => {
       return participant.selectedOptions.includes(option.id) ? sum + 1 : sum;
     }, 0);
@@ -37,8 +19,14 @@ export default function PollTable({ poll }: PollTableProps) {
 
   const highestTotal = Math.max(...totals);
 
+  async function onFormAction(formData: FormData) {
+    await addParticipantAction(formData);
+    formRef.current?.reset();
+  }
+
   return (
-    <form onSubmit={onSubmit}>
+    <form action={onFormAction} ref={formRef}>
+      <input name="pollId" type="hidden" value={poll.id} />
       <table>
         <thead>
           <tr>
