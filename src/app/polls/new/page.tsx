@@ -6,15 +6,22 @@ import { createPollAction } from '@/actions/polls';
 
 export default function NewPollPage() {
   const [maxOptions, setMaxOptions] = useState(5);
+  const [error, setError] = useState(false);
 
   async function onFormAction(formData: FormData) {
-    const poll = await createPollAction(formData);
-    redirect(`/polls/${poll.id}`);
+    const response = await createPollAction(formData);
+
+    if (response.data) {
+      redirect(`/polls/${response.data.id}`);
+    } else {
+      setError(true);
+    }
   }
 
   return (
     <main>
       <form action={onFormAction}>
+        {error && <div>Sorry, there was a problem creating the poll</div>}
         <label>
           Poll name:
           <input name="title" required />
