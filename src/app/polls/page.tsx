@@ -1,4 +1,4 @@
-import { getPolls } from '@/services/polls';
+import { getPolls } from '@/services/poll';
 import Link from 'next/link';
 
 export default async function Polls() {

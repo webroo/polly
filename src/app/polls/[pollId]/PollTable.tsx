@@ -1,8 +1,9 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { addParticipantAction } from '@/actions/polls';
-import { Poll } from '@/types/poll';
+import { addParticipantAction } from '@/actions/poll';
+import { Poll, PollParticipant } from '@/types/poll';
+import { ActionResult } from '@/types/action';
 
 interface PollTableProps {
   poll: Poll;
@@ -11,21 +12,9 @@ interface PollTableProps {
 export default function PollTable({ poll }: PollTableProps) {
   const formRef = useRef<HTMLFormElement>(null);
 
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
+  const [formState, setFormState] = useState<ActionResult<PollParticipant>>({});
 
-  async function onFormAction(formData: FormData) {
-    const response = await addParticipantAction(formData);
-
-    if (response.data) {
-      setSuccess(true);
-      setError(false);
-      formRef.current?.reset();
-    } else {
-      setSuccess(false);
-      setError(true);
-    }
-  }
+  const { data, serverError, validationErrors } = formState;
 
   const totals: number[] = poll.options.map(option => {
     return poll.participants.reduce((sum, participant) => {
@@ -35,10 +24,22 @@ export default function PollTable({ poll }: PollTableProps) {
 
   const highestTotal = Math.max(...totals);
 
+  async function onFormAction(formData: FormData) {
+    const result = await addParticipantAction(formData);
+
+    setFormState(result);
+
+    if (result.data) {
+      formRef.current?.reset();
+    }
+  }
+
   return (
     <form action={onFormAction} ref={formRef}>
-      {success && <div>Thank you for adding your response</div>}
-      {error && <div>Sorry, there was a problem adding your response</div>}
+      {data && <div>Thank you for adding your response</div>}
+      {serverError && (
+        <div>Sorry, there was a problem adding your response</div>
+      )}
       <input name="pollId" type="hidden" value={poll.id} />
       <table>
         <thead>
@@ -65,7 +66,10 @@ export default function PollTable({ poll }: PollTableProps) {
           ))}
           <tr>
             <td>
-              Your name: <input name="name" />
+              {validationErrors?.name?._errors.map(error => (
+                <div key={error}>{error}</div>
+              ))}
+              Your name: <input name="name" required />
             </td>
             {poll.options.map(option => (
               <td key={option.id}>

@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getPoll } from '@/services/polls';
+import { getPoll } from '@/services/poll';
 import PollTable from './PollTable';
 
 export default async function PollPage({

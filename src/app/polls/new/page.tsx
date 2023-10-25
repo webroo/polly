@@ -2,26 +2,30 @@
 
 import { useState } from 'react';
 import { redirect } from 'next/navigation';
-import { createPollAction } from '@/actions/polls';
+import { createPollAction } from '@/actions/poll';
+import { Poll } from '@/types/poll';
+import { ActionResult } from '@/types/action';
 
 export default function NewPollPage() {
   const [maxOptions, setMaxOptions] = useState(5);
-  const [error, setError] = useState(false);
+  const [formState, setFormState] = useState<ActionResult<Poll>>({});
+
+  const { serverError, validationErrors } = formState;
 
   async function onFormAction(formData: FormData) {
-    const response = await createPollAction(formData);
+    const result = await createPollAction(formData);
 
-    if (response.data) {
-      redirect(`/polls/${response.data.id}`);
-    } else {
-      setError(true);
+    setFormState(result);
+
+    if (result.data) {
+      redirect(`/polls/${result.data.id}`);
     }
   }
 
   return (
     <main>
       <form action={onFormAction}>
-        {error && <div>Sorry, there was a problem creating the poll</div>}
+        {serverError && <div>Sorry, there was a problem creating the poll</div>}
         <label>
           Poll name:
           <input name="title" required />
@@ -32,6 +36,9 @@ export default function NewPollPage() {
         </label>
         <fieldset>
           <legend>Options</legend>
+          {validationErrors?.options?._errors.map(error => (
+            <div key={error}>{error}</div>
+          ))}
           {Array.from({ length: maxOptions }).map((_, index) => (
             <label key={index}>
               Option {index + 1}:

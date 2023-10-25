@@ -25,9 +25,7 @@ export async function createPoll(
     title,
     description,
     participants: [],
-    options: options
-      .filter(option => Boolean(option.trim()))
-      .map(option => ({ id: uniqueid(), name: option })),
+    options: options.map(option => ({ id: uniqueid(), name: option })),
   };
 
   await (await connectDB())
