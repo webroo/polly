@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import { experimental_useFormState as useFormState } from 'react-dom';
 import { addParticipantAction } from '@/actions/poll';
 import { Poll } from '@/types/poll';
+import { SubmitButton } from '@/components/SubmitButton';
 
 interface PollTableProps {
   poll: Poll;
@@ -65,7 +66,7 @@ export default function PollTable({ poll }: PollTableProps) {
               {validationErrors?.name?._errors.map(error => (
                 <div key={error}>{error}</div>
               ))}
-              Your name: <input name="name" />
+              Your name: <input name="name" required />
             </td>
             {poll.options.map(option => (
               <td key={option.id}>
@@ -77,7 +78,7 @@ export default function PollTable({ poll }: PollTableProps) {
               </td>
             ))}
             <td>
-              <button type="submit">Save</button>
+              <SubmitButton>Save</SubmitButton>
             </td>
           </tr>
           <tr>

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { experimental_useFormState as useFormState } from 'react-dom';
 import { createPollAction } from '@/actions/poll';
+import { SubmitButton } from '@/components/SubmitButton';
 
 export default function NewPollPage() {
   const [maxOptions, setMaxOptions] = useState(5);
@@ -41,7 +42,7 @@ export default function NewPollPage() {
             Add another option
           </button>
         </fieldset>
-        <button type="submit">Save</button>
+        <SubmitButton>Save</SubmitButton>
       </form>
     </main>
   );
