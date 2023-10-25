@@ -1,12 +1,14 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import { addParticipantFormSchema, createPollFormSchema } from '@/schemas/poll';
 import { addParticipant, createPoll } from '@/services/poll';
 import { PollParticipant, Poll } from '@/types/poll';
 import { ActionResult } from '@/types/action';
 
 export async function createPollAction(
+  _prevState: ActionResult,
   formData: FormData,
 ): Promise<ActionResult<Poll>> {
   const pollFormData = createPollFormSchema.safeParse({
@@ -26,11 +28,11 @@ export async function createPollAction(
   );
 
   revalidatePath('/polls/[pollId]', 'page');
-
-  return { data: poll };
+  redirect(`/polls/${poll.id}`);
 }
 
 export async function addParticipantAction(
+  _prevState: ActionResult,
   formData: FormData,
 ): Promise<ActionResult<PollParticipant>> {
   const participantFormData = addParticipantFormSchema.safeParse({

@@ -1,9 +1,9 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { experimental_useFormState as useFormState } from 'react-dom';
 import { addParticipantAction } from '@/actions/poll';
-import { Poll, PollParticipant } from '@/types/poll';
-import { ActionResult } from '@/types/action';
+import { Poll } from '@/types/poll';
 
 interface PollTableProps {
   poll: Poll;
@@ -12,7 +12,7 @@ interface PollTableProps {
 export default function PollTable({ poll }: PollTableProps) {
   const formRef = useRef<HTMLFormElement>(null);
 
-  const [formState, setFormState] = useState<ActionResult<PollParticipant>>({});
+  const [formState, formAction] = useFormState(addParticipantAction, {});
 
   const { data, serverError, validationErrors } = formState;
 
@@ -24,18 +24,14 @@ export default function PollTable({ poll }: PollTableProps) {
 
   const highestTotal = Math.max(...totals);
 
-  async function onFormAction(formData: FormData) {
-    const result = await addParticipantAction(formData);
-
-    setFormState(result);
-
-    if (result.data) {
+  useEffect(() => {
+    if (data) {
       formRef.current?.reset();
     }
-  }
+  }, [data]);
 
   return (
-    <form action={onFormAction} ref={formRef}>
+    <form action={formAction} ref={formRef}>
       {data && <div>Thank you for adding your response</div>}
       {serverError && (
         <div>Sorry, there was a problem adding your response</div>
@@ -69,7 +65,7 @@ export default function PollTable({ poll }: PollTableProps) {
               {validationErrors?.name?._errors.map(error => (
                 <div key={error}>{error}</div>
               ))}
-              Your name: <input name="name" required />
+              Your name: <input name="name" />
             </td>
             {poll.options.map(option => (
               <td key={option.id}>

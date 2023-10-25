@@ -1,30 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import { redirect } from 'next/navigation';
+import { experimental_useFormState as useFormState } from 'react-dom';
 import { createPollAction } from '@/actions/poll';
-import { Poll } from '@/types/poll';
-import { ActionResult } from '@/types/action';
 
 export default function NewPollPage() {
   const [maxOptions, setMaxOptions] = useState(5);
-  const [formState, setFormState] = useState<ActionResult<Poll>>({});
+
+  const [formState, formAction] = useFormState(createPollAction, {});
 
   const { serverError, validationErrors } = formState;
 
-  async function onFormAction(formData: FormData) {
-    const result = await createPollAction(formData);
-
-    setFormState(result);
-
-    if (result.data) {
-      redirect(`/polls/${result.data.id}`);
-    }
-  }
-
   return (
     <main>
-      <form action={onFormAction}>
+      <form action={formAction}>
         {serverError && <div>Sorry, there was a problem creating the poll</div>}
         <label>
           Poll name:
