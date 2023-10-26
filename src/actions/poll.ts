@@ -15,16 +15,13 @@ import {
   deleteParticipant,
   updateParticipant,
 } from '@/services/poll';
+import { parseFormData } from '@/lib/formdata';
 
 export async function createPollAction(
   _prevState: ActionResult,
   formData: FormData,
 ): Promise<ActionResult<Poll>> {
-  const pollFormData = createPollFormSchema.safeParse({
-    title: formData.get('title'),
-    description: formData.get('description'),
-    options: formData.getAll('options'),
-  });
+  const pollFormData = createPollFormSchema.safeParse(parseFormData(formData));
 
   if (!pollFormData.success) {
     return { validationErrors: pollFormData.error.format() };
@@ -44,11 +41,9 @@ export async function addParticipantAction(
   _prevState: ActionResult,
   formData: FormData,
 ): Promise<ActionResult<PollParticipant>> {
-  const participantFormData = addParticipantFormSchema.safeParse({
-    pollId: formData.get('pollId'),
-    name: formData.get('name'),
-    selectedOptions: formData.getAll('selectedOptions'),
-  });
+  const participantFormData = addParticipantFormSchema.safeParse(
+    parseFormData(formData),
+  );
 
   if (!participantFormData.success) {
     return { validationErrors: participantFormData.error.format() };
@@ -69,12 +64,9 @@ export async function updateParticipantAction(
   _prevState: ActionResult,
   formData: FormData,
 ): Promise<ActionResult<PollParticipant>> {
-  const participantFormData = updateParticipantFormSchema.safeParse({
-    pollId: formData.get('pollId'),
-    participantId: formData.get('participantId'),
-    name: formData.get('name'),
-    selectedOptions: formData.getAll('selectedOptions'),
-  });
+  const participantFormData = updateParticipantFormSchema.safeParse(
+    parseFormData(formData),
+  );
 
   if (!participantFormData.success) {
     return { validationErrors: participantFormData.error.format() };
