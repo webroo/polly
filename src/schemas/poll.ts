@@ -14,3 +14,10 @@ export const addParticipantFormSchema = z.object({
   name: z.string().trim().min(1),
   selectedOptions: z.array(z.string()),
 });
+
+export const updateParticipantFormSchema = z.object({
+  pollId: z.string(),
+  participantId: z.string(),
+  name: z.string().trim().min(1),
+  selectedOptions: z.array(z.string()),
+});

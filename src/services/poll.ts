@@ -52,3 +52,28 @@ export async function addParticipant(
 
   return participant;
 }
+
+export async function updateParticipant(
+  pollId: string,
+  participantId: string,
+  name: string,
+  selectedOptions: string[],
+): Promise<PollParticipant> {
+  const participant: PollParticipant = {
+    id: participantId,
+    name,
+    selectedOptions,
+  };
+
+  await (await connectDB()).collection('polls').updateOne(
+    { id: pollId, 'participants.id': participant.id },
+    {
+      $set: {
+        'participants.$.name': participant.name,
+        'participants.$.selectedOptions': participant.selectedOptions,
+      },
+    },
+  );
+
+  return participant;
+}

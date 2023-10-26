@@ -2,18 +2,25 @@
 
 import { useEffect, useRef } from 'react';
 import { experimental_useFormState as useFormState } from 'react-dom';
-import { addParticipantAction } from '@/actions/poll';
+import { redirect } from 'next/navigation';
+import { addParticipantAction, updateParticipantAction } from '@/actions/poll';
 import { Poll } from '@/types/poll';
 import { SubmitButton } from '@/components/SubmitButton';
+import Link from 'next/link';
 
 interface PollTableProps {
   poll: Poll;
+  editParticipantId?: string;
 }
 
-export default function PollTable({ poll }: PollTableProps) {
+export default function PollTable({ poll, editParticipantId }: PollTableProps) {
   const formRef = useRef<HTMLFormElement>(null);
 
-  const [formState, formAction] = useFormState(addParticipantAction, {});
+  const action = editParticipantId
+    ? updateParticipantAction
+    : addParticipantAction;
+
+  const [formState, formAction] = useFormState(action, {});
 
   const { data, serverError, validationErrors } = formState;
 
@@ -26,10 +33,13 @@ export default function PollTable({ poll }: PollTableProps) {
   const highestTotal = Math.max(...totals);
 
   useEffect(() => {
+    if (data && editParticipantId) {
+      redirect(`/polls/${poll.id}`);
+    }
     if (data) {
       formRef.current?.reset();
     }
-  }, [data]);
+  }, [data, editParticipantId, poll]);
 
   return (
     <form action={formAction} ref={formRef}>
@@ -50,37 +60,80 @@ export default function PollTable({ poll }: PollTableProps) {
         <tbody>
           {poll.participants.map(participant => (
             <tr key={participant.id}>
-              <td>{participant.name}</td>
-              {poll.options.map(option => (
-                <td key={option.id}>
-                  {participant.selectedOptions.includes(option.id)
-                    ? 'YES'
-                    : 'NO'}
-                </td>
-              ))}
-              <td></td>
+              {participant.id === editParticipantId ? (
+                <>
+                  <td>
+                    <input
+                      name="participantId"
+                      type="hidden"
+                      value={participant.id}
+                    />
+                    Your name:{' '}
+                    <input
+                      name="name"
+                      defaultValue={participant.name}
+                      required
+                    />
+                  </td>
+                  {poll.options.map(option => (
+                    <td key={option.id}>
+                      <input
+                        type="checkbox"
+                        name="selectedOptions"
+                        value={option.id}
+                        defaultChecked={participant.selectedOptions.includes(
+                          option.id,
+                        )}
+                      />
+                    </td>
+                  ))}
+                  <td>
+                    <SubmitButton>Save</SubmitButton>
+                  </td>
+                </>
+              ) : (
+                <>
+                  <td>{participant.name}</td>
+                  {poll.options.map(option => (
+                    <td key={option.id}>
+                      {participant.selectedOptions.includes(option.id)
+                        ? 'YES'
+                        : 'NO'}
+                    </td>
+                  ))}
+                  <td>
+                    <Link
+                      href={`/polls/${poll.id}?participant=${participant.id}`}
+                    >
+                      Edit
+                    </Link>
+                  </td>
+                </>
+              )}
             </tr>
           ))}
-          <tr>
-            <td>
-              {validationErrors?.name?._errors.map(error => (
-                <div key={error}>{error}</div>
-              ))}
-              Your name: <input name="name" required />
-            </td>
-            {poll.options.map(option => (
-              <td key={option.id}>
-                <input
-                  type="checkbox"
-                  name="selectedOptions"
-                  value={option.id}
-                />
+          {!editParticipantId && (
+            <tr>
+              <td>
+                {validationErrors?.name?._errors.map(error => (
+                  <div key={error}>{error}</div>
+                ))}
+                Your name: <input name="name" required />
               </td>
-            ))}
-            <td>
-              <SubmitButton>Save</SubmitButton>
-            </td>
-          </tr>
+              {poll.options.map(option => (
+                <td key={option.id}>
+                  <input
+                    type="checkbox"
+                    name="selectedOptions"
+                    value={option.id}
+                  />
+                </td>
+              ))}
+              <td>
+                <SubmitButton>Save</SubmitButton>
+              </td>
+            </tr>
+          )}
           <tr>
             <td>Totals</td>
             {totals.map((value, index) => (

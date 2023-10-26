@@ -2,10 +2,14 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { addParticipantFormSchema, createPollFormSchema } from '@/schemas/poll';
-import { addParticipant, createPoll } from '@/services/poll';
 import { PollParticipant, Poll } from '@/types/poll';
 import { ActionResult } from '@/types/action';
+import {
+  addParticipantFormSchema,
+  createPollFormSchema,
+  updateParticipantFormSchema,
+} from '@/schemas/poll';
+import { addParticipant, createPoll, updateParticipant } from '@/services/poll';
 
 export async function createPollAction(
   _prevState: ActionResult,
@@ -47,6 +51,33 @@ export async function addParticipantAction(
 
   const participant = await addParticipant(
     participantFormData.data.pollId,
+    participantFormData.data.name,
+    participantFormData.data.selectedOptions,
+  );
+
+  revalidatePath('/polls/[pollId]', 'page');
+
+  return { data: participant };
+}
+
+export async function updateParticipantAction(
+  _prevState: ActionResult,
+  formData: FormData,
+): Promise<ActionResult<PollParticipant>> {
+  const participantFormData = updateParticipantFormSchema.safeParse({
+    pollId: formData.get('pollId'),
+    participantId: formData.get('participantId'),
+    name: formData.get('name'),
+    selectedOptions: formData.getAll('selectedOptions'),
+  });
+
+  if (!participantFormData.success) {
+    return { validationErrors: participantFormData.error.format() };
+  }
+
+  const participant = await updateParticipant(
+    participantFormData.data.pollId,
+    participantFormData.data.participantId,
     participantFormData.data.name,
     participantFormData.data.selectedOptions,
   );
