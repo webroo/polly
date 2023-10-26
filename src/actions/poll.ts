@@ -9,7 +9,12 @@ import {
   createPollFormSchema,
   updateParticipantFormSchema,
 } from '@/schemas/poll';
-import { addParticipant, createPoll, updateParticipant } from '@/services/poll';
+import {
+  addParticipant,
+  createPoll,
+  deleteParticipant,
+  updateParticipant,
+} from '@/services/poll';
 
 export async function createPollAction(
   _prevState: ActionResult,
@@ -85,4 +90,15 @@ export async function updateParticipantAction(
   revalidatePath('/polls/[pollId]', 'page');
 
   return { data: participant };
+}
+
+export async function deleteParticipantAction(
+  pollId: string,
+  participantId: string,
+): Promise<ActionResult<boolean>> {
+  const success = await deleteParticipant(pollId, participantId);
+
+  revalidatePath('/polls/[pollId]', 'page');
+
+  return { data: success };
 }

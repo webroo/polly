@@ -77,3 +77,17 @@ export async function updateParticipant(
 
   return participant;
 }
+
+export async function deleteParticipant(
+  pollId: string,
+  participantId: string,
+): Promise<boolean> {
+  await (await connectDB())
+    .collection('polls')
+    .updateOne(
+      { id: pollId },
+      { $pull: { participants: { id: participantId } } },
+    );
+
+  return true;
+}

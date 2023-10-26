@@ -3,7 +3,11 @@
 import { useEffect, useRef } from 'react';
 import { experimental_useFormState as useFormState } from 'react-dom';
 import { redirect } from 'next/navigation';
-import { addParticipantAction, updateParticipantAction } from '@/actions/poll';
+import {
+  addParticipantAction,
+  deleteParticipantAction,
+  updateParticipantAction,
+} from '@/actions/poll';
 import { Poll } from '@/types/poll';
 import { SubmitButton } from '@/components/SubmitButton';
 import Link from 'next/link';
@@ -107,6 +111,19 @@ export default function PollTable({ poll, editParticipantId }: PollTableProps) {
                     >
                       Edit
                     </Link>
+                    <button
+                      formAction={deleteParticipantAction.bind(
+                        null,
+                        poll.id,
+                        participant.id,
+                      )}
+                      formNoValidate
+                      onClick={e =>
+                        !confirm('Delete this response?') && e.preventDefault()
+                      }
+                    >
+                      Delete
+                    </button>
                   </td>
                 </>
               )}
