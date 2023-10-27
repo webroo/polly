@@ -79,11 +79,11 @@ export default function PollTable({ poll, editParticipantId }: PollTableProps) {
                       required
                     />
                   </td>
-                  {poll.options.map((option, index) => (
+                  {poll.options.map(option => (
                     <td key={option.id}>
                       <input
                         type="checkbox"
-                        name={`selectedOptions[${index}]`}
+                        name="selectedOptions[]"
                         value={option.id}
                         defaultChecked={participant.selectedOptions.includes(
                           option.id,
@@ -137,11 +137,11 @@ export default function PollTable({ poll, editParticipantId }: PollTableProps) {
                 ))}
                 Your name: <input name="name" required />
               </td>
-              {poll.options.map((option, index) => (
+              {poll.options.map(option => (
                 <td key={option.id}>
                   <input
                     type="checkbox"
-                    name={`selectedOptions[${index}]`}
+                    name="selectedOptions[]"
                     value={option.id}
                   />
                 </td>

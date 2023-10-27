@@ -32,7 +32,7 @@ export default function NewPollPage() {
           {Array.from({ length: maxOptions }).map((_, index) => (
             <label key={index}>
               Option {index + 1}:
-              <input name={`options[${index}]`} required={index < 2} />
+              <input name="options[]" required={index < 2} />
             </label>
           ))}
           <button

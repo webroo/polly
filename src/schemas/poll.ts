@@ -12,18 +12,12 @@ export const createPollFormSchema = z.object({
 export const addParticipantFormSchema = z.object({
   pollId: z.string(),
   name: z.string().trim().min(1),
-  selectedOptions: z
-    .array(z.string().optional())
-    .transform(v => v.filter(Boolean))
-    .pipe(z.array(z.string())),
+  selectedOptions: z.array(z.string()).default([]),
 });
 
 export const updateParticipantFormSchema = z.object({
   pollId: z.string(),
   participantId: z.string(),
   name: z.string().trim().min(1),
-  selectedOptions: z
-    .array(z.string().optional())
-    .transform(v => v.filter(Boolean))
-    .pipe(z.array(z.string())),
+  selectedOptions: z.array(z.string()).default([]),
 });
