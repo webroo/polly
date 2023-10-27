@@ -1,6 +1,8 @@
 import { customAlphabet } from 'nanoid';
 
+export const UNIQUE_ID_SIZE = 14;
+
 export const uniqueid = customAlphabet(
   '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
-  14,
+  UNIQUE_ID_SIZE,
 );

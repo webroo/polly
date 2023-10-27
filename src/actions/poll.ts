@@ -6,9 +6,9 @@ import { PollParticipant, Poll } from '@/types/poll';
 import { ActionResult } from '@/types/action';
 import { parseFormData } from '@/lib/formdata';
 import {
-  addParticipantFormSchema,
   pollFormSchema,
-  updateParticipantFormSchema,
+  addParticipantFormSchema,
+  editParticipantFormSchema,
 } from '@/schemas/poll';
 import {
   addParticipant,
@@ -88,7 +88,7 @@ export async function updateParticipantAction(
   _prevState: ActionResult,
   formData: FormData,
 ): Promise<ActionResult<PollParticipant> | never> {
-  const participantFormData = updateParticipantFormSchema.safeParse(
+  const participantFormData = editParticipantFormSchema.safeParse(
     parseFormData(formData),
   );
 
