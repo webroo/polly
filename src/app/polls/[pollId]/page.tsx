@@ -28,6 +28,7 @@ export default async function PollPage({
     <main>
       <h1>{poll.title}</h1>
       <p>{poll.description}</p>
+      <a href={`/polls/${poll.id}/edit`}>Edit this poll</a>
       <PollTable poll={poll} editParticipantId={searchParams.participant} />
     </main>
   );
