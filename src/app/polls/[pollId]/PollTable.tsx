@@ -2,25 +2,27 @@
 
 import { useEffect, useRef } from 'react';
 import { experimental_useFormState as useFormState } from 'react-dom';
-import { redirect } from 'next/navigation';
+import Link from 'next/link';
 import {
   addParticipantAction,
   deleteParticipantAction,
   updateParticipantAction,
 } from '@/actions/poll';
-import { Poll } from '@/types/poll';
+import { Poll, PollParticipant } from '@/types/poll';
 import { SubmitButton } from '@/components/SubmitButton';
-import Link from 'next/link';
 
 interface PollTableProps {
   poll: Poll;
-  editParticipantId?: string;
+  existingParticipant?: PollParticipant;
 }
 
-export default function PollTable({ poll, editParticipantId }: PollTableProps) {
+export default function PollTable({
+  poll,
+  existingParticipant,
+}: PollTableProps) {
   const formRef = useRef<HTMLFormElement>(null);
 
-  const action = editParticipantId
+  const action = existingParticipant
     ? updateParticipantAction
     : addParticipantAction;
 
@@ -37,13 +39,10 @@ export default function PollTable({ poll, editParticipantId }: PollTableProps) {
   const highestTotal = Math.max(...totals);
 
   useEffect(() => {
-    if (data && editParticipantId) {
-      redirect(`/polls/${poll.id}`);
-    }
     if (data) {
       formRef.current?.reset();
     }
-  }, [data, editParticipantId, poll]);
+  }, [data, existingParticipant, poll]);
 
   return (
     <form action={formAction} ref={formRef}>
@@ -64,7 +63,7 @@ export default function PollTable({ poll, editParticipantId }: PollTableProps) {
         <tbody>
           {poll.participants.map(participant => (
             <tr key={participant.id}>
-              {participant.id === editParticipantId ? (
+              {participant.id === existingParticipant?.id ? (
                 <>
                   <td>
                     <input
@@ -107,7 +106,7 @@ export default function PollTable({ poll, editParticipantId }: PollTableProps) {
                   ))}
                   <td>
                     <Link
-                      href={`/polls/${poll.id}?participant=${participant.id}`}
+                      href={`/polls/${poll.id}/participants/${participant.id}/edit`}
                     >
                       Edit
                     </Link>
@@ -129,7 +128,7 @@ export default function PollTable({ poll, editParticipantId }: PollTableProps) {
               )}
             </tr>
           ))}
-          {!editParticipantId && (
+          {!existingParticipant && (
             <tr>
               <td>
                 {validationErrors?.name?._errors.map(error => (

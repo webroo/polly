@@ -87,7 +87,7 @@ export async function addParticipantAction(
 export async function updateParticipantAction(
   _prevState: ActionResult,
   formData: FormData,
-): Promise<ActionResult<PollParticipant>> {
+): Promise<ActionResult<PollParticipant> | never> {
   const participantFormData = updateParticipantFormSchema.safeParse(
     parseFormData(formData),
   );
@@ -96,7 +96,7 @@ export async function updateParticipantAction(
     return { validationErrors: participantFormData.error.format() };
   }
 
-  const participant = await updateParticipant(
+  await updateParticipant(
     participantFormData.data.pollId,
     participantFormData.data.participantId,
     participantFormData.data.name,
@@ -104,8 +104,7 @@ export async function updateParticipantAction(
   );
 
   revalidatePath('/polls/[pollId]', 'page');
-
-  return { data: participant };
+  redirect(`/polls/${participantFormData.data.pollId}`);
 }
 
 export async function deleteParticipantAction(

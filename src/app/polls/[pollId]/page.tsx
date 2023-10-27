@@ -4,23 +4,12 @@ import PollTable from './PollTable';
 
 interface PollPageProps {
   params: { pollId: string };
-  searchParams: { participant: string };
 }
 
-export default async function PollPage({
-  params,
-  searchParams,
-}: PollPageProps) {
+export default async function PollPage({ params }: PollPageProps) {
   const poll = await getPoll(params.pollId);
 
   if (!poll) {
-    notFound();
-  }
-
-  if (
-    searchParams.participant &&
-    !poll.participants.some(({ id }) => id === searchParams.participant)
-  ) {
     notFound();
   }
 
@@ -29,7 +18,7 @@ export default async function PollPage({
       <h1>{poll.title}</h1>
       <p>{poll.description}</p>
       <a href={`/polls/${poll.id}/edit`}>Edit this poll</a>
-      <PollTable poll={poll} editParticipantId={searchParams.participant} />
+      <PollTable poll={poll} />
     </main>
   );
 }
