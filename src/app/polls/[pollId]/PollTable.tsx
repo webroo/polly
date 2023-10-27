@@ -118,7 +118,9 @@ export default function PollTable({
                       )}
                       formNoValidate
                       onClick={e =>
-                        !confirm('Delete this response?') && e.preventDefault()
+                        confirm('Delete this response?')
+                          ? formRef.current?.reset()
+                          : e.preventDefault()
                       }
                     >
                       Delete
