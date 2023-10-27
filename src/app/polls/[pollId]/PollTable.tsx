@@ -91,6 +91,7 @@ export default function PollTable({
                     </td>
                   ))}
                   <td>
+                    <Link href={`/polls/${poll.id}`}>Cancel</Link>
                     <SubmitButton>Save</SubmitButton>
                   </td>
                 </>

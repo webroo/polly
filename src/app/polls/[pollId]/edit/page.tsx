@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import { getPoll } from '@/services/poll';
 import PollForm from '../../new/PollForm';
 
@@ -16,6 +17,7 @@ export default async function EditPollPage({ params }: EditPollPageProps) {
   return (
     <main>
       <PollForm existingPoll={poll} />
+      <Link href={`/polls/${poll.id}`}>Cancel</Link>
     </main>
   );
 }
