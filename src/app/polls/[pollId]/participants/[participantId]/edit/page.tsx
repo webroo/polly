@@ -15,11 +15,11 @@ export default async function EditParticipantPage({
     notFound();
   }
 
-  const existingParticipant = poll.participants.find(
+  const editParticipant = poll.participants.find(
     participant => participant.id === params.participantId,
   );
 
-  if (!existingParticipant) {
+  if (!editParticipant) {
     notFound();
   }
 
@@ -28,7 +28,7 @@ export default async function EditParticipantPage({
       <h1>{poll.title}</h1>
       <p>{poll.description}</p>
       <a href={`/polls/${poll.id}/edit`}>Edit this poll</a>
-      <PollTable poll={poll} existingParticipant={existingParticipant} />
+      <PollTable poll={poll} editParticipant={editParticipant} />
     </main>
   );
 }

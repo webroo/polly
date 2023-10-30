@@ -16,7 +16,7 @@ export default async function EditPollPage({ params }: EditPollPageProps) {
 
   return (
     <main>
-      <PollForm existingPoll={poll} />
+      <PollForm editPoll={poll} />
       <Link href={`/polls/${poll.id}`}>Cancel</Link>
     </main>
   );

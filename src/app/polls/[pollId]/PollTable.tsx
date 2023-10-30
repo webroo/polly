@@ -5,13 +5,10 @@ import EditParticipantRow from './EditParticipantRow';
 
 interface PollTableProps {
   poll: Poll;
-  existingParticipant?: PollParticipant;
+  editParticipant?: PollParticipant;
 }
 
-export default function PollTable({
-  poll,
-  existingParticipant,
-}: PollTableProps) {
+export default function PollTable({ poll, editParticipant }: PollTableProps) {
   const totals: number[] = poll.options.map(option => {
     return poll.participants.reduce((sum, participant) => {
       return participant.selectedOptions.includes(option.id) ? sum + 1 : sum;
@@ -35,7 +32,7 @@ export default function PollTable({
       </div>
       <div style={{ display: 'table-row-group' }}>
         {poll.participants.map(participant =>
-          participant.id === existingParticipant?.id ? (
+          participant.id === editParticipant?.id ? (
             <EditParticipantRow
               key={participant.id}
               poll={poll}
@@ -49,7 +46,7 @@ export default function PollTable({
             />
           ),
         )}
-        {!existingParticipant && <AddParticipantRow poll={poll} />}
+        {!editParticipant && <AddParticipantRow poll={poll} />}
       </div>
       <div style={{ display: 'table-footer-group' }}>
         <div style={{ display: 'table-row' }}>
