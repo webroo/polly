@@ -9,6 +9,7 @@ import {
   pollFormSchema,
   addParticipantFormSchema,
   editParticipantFormSchema,
+  deleteParticipantFormSchema,
 } from '@/schemas/poll';
 import {
   addParticipant,
@@ -108,10 +109,21 @@ export async function updateParticipantAction(
 }
 
 export async function deleteParticipantAction(
-  pollId: string,
-  participantId: string,
+  _prevState: ActionResult,
+  formData: FormData,
 ): Promise<ActionResult<boolean>> {
-  const success = await deleteParticipant(pollId, participantId);
+  const participantFormData = deleteParticipantFormSchema.safeParse(
+    parseFormData(formData),
+  );
+
+  if (!participantFormData.success) {
+    return { validationErrors: participantFormData.error.format() };
+  }
+
+  const success = await deleteParticipant(
+    participantFormData.data.pollId,
+    participantFormData.data.participantId,
+  );
 
   revalidatePath('/polls/[pollId]', 'page');
 

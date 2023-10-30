@@ -15,13 +15,12 @@ export default function ParticipantRow({
   poll,
   participant,
 }: ParticipantRowProps) {
-  const [_formState, formAction] = useFormState(
-    deleteParticipantAction.bind(null, poll.id, participant.id),
-    {},
-  );
+  const [_formState, formAction] = useFormState(deleteParticipantAction, {});
 
   return (
     <form action={formAction} style={{ display: 'contents' }}>
+      <input name="pollId" type="hidden" value={poll.id} />
+      <input name="participantId" type="hidden" value={participant.id} />
       <div style={{ display: 'table-row' }}>
         <div style={{ display: 'table-cell' }}>{participant.name}</div>
         {poll.options.map(option => (

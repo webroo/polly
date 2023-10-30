@@ -25,3 +25,8 @@ export const addParticipantFormSchema = z.object({
 export const editParticipantFormSchema = addParticipantFormSchema.extend({
   participantId: z.string().length(UNIQUE_ID_SIZE),
 });
+
+export const deleteParticipantFormSchema = z.object({
+  pollId: z.string().length(UNIQUE_ID_SIZE),
+  participantId: z.string().length(UNIQUE_ID_SIZE),
+});
