@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { experimental_useFormState as useFormState } from 'react-dom';
+import { useFormState } from 'react-dom';
 import { createPollAction, updatePollAction } from '@/actions/poll';
 import { SubmitButton } from '@/components/SubmitButton';
 import { Poll } from '@/types/poll';
