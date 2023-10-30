@@ -51,21 +51,26 @@ export default function PollTable({
         <div>Sorry, there was a problem adding your response</div>
       )}
       <input name="pollId" type="hidden" value={poll.id} />
-      <table>
-        <thead>
-          <tr>
-            <th></th>
+      <div style={{ display: 'table' }}>
+        <div style={{ display: 'table-header-group' }}>
+          <div style={{ display: 'table-row' }}>
+            <div style={{ display: 'table-cell' }} className="text-xl">
+              Participant
+            </div>
             {poll.options.map(option => (
-              <th key={option.id}>{option.name}</th>
+              <div key={option.id} style={{ display: 'table-cell' }}>
+                {option.name}
+              </div>
             ))}
-          </tr>
-        </thead>
-        <tbody>
+            <div style={{ display: 'table-cell' }}>Actions</div>
+          </div>
+        </div>
+        <div style={{ display: 'table-row-group' }}>
           {poll.participants.map(participant => (
-            <tr key={participant.id}>
+            <div key={participant.id} style={{ display: 'table-row' }}>
               {participant.id === existingParticipant?.id ? (
                 <>
-                  <td>
+                  <div style={{ display: 'table-cell' }}>
                     <input
                       name="participantId"
                       type="hidden"
@@ -77,9 +82,9 @@ export default function PollTable({
                       defaultValue={participant.name}
                       required
                     />
-                  </td>
+                  </div>
                   {poll.options.map(option => (
-                    <td key={option.id}>
+                    <div key={option.id} style={{ display: 'table-cell' }}>
                       <input
                         type="checkbox"
                         name="selectedOptions[]"
@@ -88,24 +93,26 @@ export default function PollTable({
                           option.id,
                         )}
                       />
-                    </td>
+                    </div>
                   ))}
-                  <td>
+                  <div style={{ display: 'table-cell' }}>
                     <Link href={`/polls/${poll.id}`}>Cancel</Link>
                     <SubmitButton>Save</SubmitButton>
-                  </td>
+                  </div>
                 </>
               ) : (
                 <>
-                  <td>{participant.name}</td>
+                  <div style={{ display: 'table-cell' }}>
+                    {participant.name}
+                  </div>
                   {poll.options.map(option => (
-                    <td key={option.id}>
+                    <div key={option.id} style={{ display: 'table-cell' }}>
                       {participant.selectedOptions.includes(option.id)
                         ? 'YES'
                         : 'NO'}
-                    </td>
+                    </div>
                   ))}
-                  <td>
+                  <div style={{ display: 'table-cell' }}>
                     <Link
                       href={`/polls/${poll.id}/participants/${participant.id}/edit`}
                     >
@@ -126,44 +133,47 @@ export default function PollTable({
                     >
                       Delete
                     </button>
-                  </td>
+                  </div>
                 </>
               )}
-            </tr>
+            </div>
           ))}
           {!existingParticipant && (
-            <tr>
-              <td>
+            <div style={{ display: 'table-row' }}>
+              <div style={{ display: 'table-cell' }}>
                 {validationErrors?.name?._errors.map(error => (
                   <div key={error}>{error}</div>
                 ))}
                 Your name: <input name="name" required />
-              </td>
+              </div>
               {poll.options.map(option => (
-                <td key={option.id}>
+                <div key={option.id} style={{ display: 'table-cell' }}>
                   <input
                     type="checkbox"
                     name="selectedOptions[]"
                     value={option.id}
                   />
-                </td>
+                </div>
               ))}
-              <td>
+              <div style={{ display: 'table-cell' }}>
                 <SubmitButton>Save</SubmitButton>
-              </td>
-            </tr>
+              </div>
+            </div>
           )}
-          <tr>
-            <td>Totals</td>
+        </div>
+        <div style={{ display: 'table-footer-group' }}>
+          <div style={{ display: 'table-row' }}>
+            <div style={{ display: 'table-cell' }}>Totals</div>
             {totals.map((value, index) => (
-              <td key={index}>
+              <div key={index} style={{ display: 'table-cell' }}>
                 {value}
                 {value > 0 && value === highestTotal ? '*' : ''}
-              </td>
+              </div>
             ))}
-          </tr>
-        </tbody>
-      </table>
+            <div style={{ display: 'table-cell' }}></div>
+          </div>
+        </div>
+      </div>
     </form>
   );
 }
