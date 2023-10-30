@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getPoll } from '@/services/poll';
-import PollTable from '../../../PollTable';
+import PollTable from '@/components/PollTable';
 
 interface EditParticipantPageProps {
   params: { pollId: string; participantId: string };

@@ -1,4 +1,4 @@
-import PollForm from './PollForm';
+import PollForm from '@/components/PollForm';
 
 export default async function NewPollPage() {
   return (

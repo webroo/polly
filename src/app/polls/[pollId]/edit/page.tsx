@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getPoll } from '@/services/poll';
-import PollForm from '../../new/PollForm';
+import PollForm from '@/components/PollForm';
 
 interface EditPollPageProps {
   params: { pollId: string };
