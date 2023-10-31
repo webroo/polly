@@ -16,7 +16,7 @@ export default async function PollPage({ params }: PollPageProps) {
   return (
     <>
       <div className="flex items-center justify-between mb-5">
-        <h1 className="">{poll.title}</h1>
+        <h1>{poll.title}</h1>
         <div>
           <a href={`/polls/${poll.id}/edit`}>Edit this poll</a>
         </div>

@@ -32,6 +32,10 @@
     @apply underline;
   }
 
+  label {
+    @apply font-bold
+  }
+
   input {
     @apply border rounded;
     @apply px-2 py-1;
