@@ -18,46 +18,49 @@ export default function PollTable({ poll, editParticipant }: PollTableProps) {
   const highestTotal = Math.max(...totals);
 
   return (
-    <div style={{ display: 'table' }}>
-      <div style={{ display: 'table-header-group' }}>
-        <div style={{ display: 'table-row' }}>
-          <div style={{ display: 'table-cell' }}>Participant</div>
-          {poll.options.map(option => (
-            <div key={option.id} style={{ display: 'table-cell' }}>
-              {option.name}
-            </div>
-          ))}
-          <div style={{ display: 'table-cell' }}>Actions</div>
+    <div className="overflow-hidden border rounded-lg border-gray-300">
+      <div className="table w-full border-collapse divide-y divide-gray-300">
+        <div className="table-header-group">
+          <div className="table-row divide-x divide-gray-300">
+            <div className="table-cell w-72 p-2 rounded-tl-sm" />
+            {poll.options.map(option => (
+              <div
+                key={option.id}
+                className="table-cell p-2 font-bold text-center"
+              >
+                {option.name}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-      <div style={{ display: 'table-row-group' }}>
-        {poll.participants.map(participant =>
-          participant.id === editParticipant?.id ? (
-            <EditParticipantRow
-              key={participant.id}
-              poll={poll}
-              participant={participant}
-            />
-          ) : (
-            <ParticipantRow
-              key={participant.id}
-              poll={poll}
-              participant={participant}
-            />
-          ),
-        )}
-        {!editParticipant && <AddParticipantRow poll={poll} />}
-      </div>
-      <div style={{ display: 'table-footer-group' }}>
-        <div style={{ display: 'table-row' }}>
-          <div style={{ display: 'table-cell' }}>Totals</div>
-          {totals.map((value, index) => (
-            <div key={index} style={{ display: 'table-cell' }}>
-              {value}
-              {value > 0 && value === highestTotal ? '*' : ''}
-            </div>
-          ))}
-          <div style={{ display: 'table-cell' }}></div>
+        <div className="table-row-group divide-y divide-gray-300">
+          {poll.participants.map(participant =>
+            participant.id === editParticipant?.id ? (
+              <EditParticipantRow
+                key={participant.id}
+                poll={poll}
+                participant={participant}
+              />
+            ) : (
+              <ParticipantRow
+                key={participant.id}
+                poll={poll}
+                participant={participant}
+              />
+            ),
+          )}
+          {!editParticipant && <AddParticipantRow poll={poll} />}
+        </div>
+        <div className="table-footer-group">
+          <div className="table-row divide-x divide-gray-300">
+            <div className="table-cell p-2">Totals</div>
+            {totals.map((value, index) => (
+              <div key={index} className="table-cell p-2 text-center">
+                {value}
+                {value > 0 && value === highestTotal ? '*' : ''}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

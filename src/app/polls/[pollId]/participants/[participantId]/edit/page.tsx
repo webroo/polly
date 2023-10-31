@@ -24,11 +24,15 @@ export default async function EditParticipantPage({
   }
 
   return (
-    <main>
-      <h1>{poll.title}</h1>
-      <p>{poll.description}</p>
-      <a href={`/polls/${poll.id}/edit`}>Edit this poll</a>
+    <>
+      <div className="flex items-center justify-between mb-5">
+        <h1 className="">{poll.title}</h1>
+        <div>
+          <a href={`/polls/${poll.id}/edit`}>Edit this poll</a>
+        </div>
+      </div>
+      <p className="mb-6">{poll.description}</p>
       <PollTable poll={poll} editParticipant={editParticipant} />
-    </main>
+    </>
   );
 }

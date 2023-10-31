@@ -34,6 +34,7 @@
 
   input {
     @apply border rounded;
+    @apply px-2 py-1;
   }
 
   ul {

@@ -21,16 +21,25 @@ export default function EditParticipantRow({
   const [_formState, formAction] = useFormState(updateParticipantAction, {});
 
   return (
-    <form action={formAction} ref={formRef} style={{ display: 'contents' }}>
-      <input name="pollId" type="hidden" value={poll.id} />
-      <input name="participantId" type="hidden" value={participant.id} />
-      <div style={{ display: 'table-row' }}>
-        <div style={{ display: 'table-cell' }}>
-          Your name:{' '}
-          <input name="name" defaultValue={participant.name} required />
+    <div className="table-row relative h-32">
+      <form
+        action={formAction}
+        ref={formRef}
+        className="contents  divide-x divide-gray-300"
+      >
+        <input name="pollId" type="hidden" value={poll.id} />
+        <input name="participantId" type="hidden" value={participant.id} />
+        <div className="table-cell p-2 align-top">
+          <div className="mb-1">Your name:</div>
+          <input
+            name="name"
+            defaultValue={participant.name}
+            required
+            className="w-full"
+          />
         </div>
         {poll.options.map(option => (
-          <div key={option.id} style={{ display: 'table-cell' }}>
+          <div key={option.id} className="table-cell p-2 pt-7 text-center">
             <input
               type="checkbox"
               name="selectedOptions[]"
@@ -39,11 +48,15 @@ export default function EditParticipantRow({
             />
           </div>
         ))}
-        <div style={{ display: 'table-cell' }}>
+        <div className="absolute bottom-2 left-[5%] w-[90%] rounded p-2 bg-emerald-300 text-center">
+          <SubmitButton>Save</SubmitButton> or{' '}
+          <Link href={`/polls/${poll.id}`}>Cancel</Link> changes
+        </div>
+        {/* <div className="table-cell">
           <Link href={`/polls/${poll.id}`}>Cancel</Link>
           <SubmitButton>Save</SubmitButton>
-        </div>
-      </div>
-    </form>
+        </div> */}
+      </form>
+    </div>
   );
 }
