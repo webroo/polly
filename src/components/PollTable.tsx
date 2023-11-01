@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Poll, PollParticipant } from '@/types/poll';
 import ParticipantRow from './ParticipantRow';
 import AddParticipantRow from './AddParticipantRow';
@@ -52,12 +53,17 @@ export default function PollTable({ poll, editParticipant }: PollTableProps) {
           {!editParticipant && <AddParticipantRow poll={poll} />}
         </div>
         <div className="table-footer-group">
-          <div className="table-row divide-x divide-gray-300">
-            <div className="table-cell p-2">Totals</div>
+          <div className="table-row divide-x divide-gray-300 italic">
+            <div className="table-cell p-2 align-middle">Totals</div>
             {totals.map((value, index) => (
-              <div key={index} className="table-cell p-2 text-center">
+              <div
+                key={index}
+                className={clsx({
+                  'table-cell p-4 text-center align-middle': true,
+                  'font-semibold text-2xl': value > 0 && value === highestTotal,
+                })}
+              >
                 {value}
-                {value > 0 && value === highestTotal ? '*' : ''}
               </div>
             ))}
           </div>
