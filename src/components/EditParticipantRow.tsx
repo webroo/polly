@@ -30,7 +30,9 @@ export default function EditParticipantRow({
         <input name="pollId" type="hidden" value={poll.id} />
         <input name="participantId" type="hidden" value={participant.id} />
         <div className="table-cell p-2 align-top">
-          <div className="mb-1">Your name:</div>
+          <label htmlFor="name" className="block mb-1.5">
+            Your name:
+          </label>
           <input
             name="name"
             defaultValue={participant.name}

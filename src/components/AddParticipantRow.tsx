@@ -30,7 +30,7 @@ export default function AddParticipantRow({ poll }: AddParticipantRowProps) {
       >
         <input name="pollId" type="hidden" value={poll.id} />
         <div className="table-cell p-2 align-top">
-          <label htmlFor="name" className="block mb-2">
+          <label htmlFor="name" className="block mb-1.5">
             Your name:
           </label>
           <input name="name" required className="w-full" />
