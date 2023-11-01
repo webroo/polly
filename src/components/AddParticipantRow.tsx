@@ -24,6 +24,7 @@ export default function AddParticipantRow({ poll }: AddParticipantRowProps) {
   return (
     <div className="table-row relative h-36 outline outline-2 outline-gray-800 outline-offset-[-1px]">
       <form
+        id="ParticipantForm"
         action={formAction}
         ref={formRef}
         className="contents divide-x divide-gray-300"
@@ -31,7 +32,7 @@ export default function AddParticipantRow({ poll }: AddParticipantRowProps) {
         <input name="pollId" type="hidden" value={poll.id} />
         <div className="table-cell p-2 align-top">
           <label htmlFor="name" className="block mb-1.5">
-            Your name:
+            Your name
           </label>
           <input name="name" required className="w-full" />
         </div>
@@ -40,11 +41,13 @@ export default function AddParticipantRow({ poll }: AddParticipantRowProps) {
             <input type="checkbox" name="selectedOptions[]" value={option.id} />
           </div>
         ))}
-        <div className="absolute bottom-4 left-[5%] w-[90%] rounded p-2 text-center bg-lime-400">
-          Enter your name, select your options and{' '}
-          <SubmitButton>Save</SubmitButton>
-        </div>
       </form>
+      <div className="absolute bottom-4 left-[20rem] right-8 p-2 text-center bg-white rounded-md border border-gray-300 shadow-md">
+        Enter your name, select your options and{' '}
+        <SubmitButton form="ParticipantForm" className="btn-primary py-2">
+          Save
+        </SubmitButton>
+      </div>
     </div>
   );
 }

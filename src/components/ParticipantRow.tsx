@@ -26,7 +26,6 @@ export default function ParticipantRow({
         <div className="table-cell p-2">
           <span className="font-bold">{participant.name}</span>{' '}
           <span className="text-sm text-gray-600">
-            (
             <Link
               href={`/polls/${poll.id}/participants/${participant.id}/edit`}
             >
@@ -34,6 +33,7 @@ export default function ParticipantRow({
             </Link>{' '}
             or{' '}
             <SubmitButton
+              className="link"
               onClick={e =>
                 confirm('Delete this response?')
                   ? undefined // formRef.current?.reset()
@@ -42,7 +42,6 @@ export default function ParticipantRow({
             >
               Delete
             </SubmitButton>
-            )
           </span>
         </div>
         {poll.options.map(option => (

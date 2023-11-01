@@ -81,13 +81,14 @@ export default function PollForm({ editPoll }: PollFormProps) {
             <button
               type="button"
               onClick={() => setMaxOptions(value => value + 1)}
+              className="btn"
             >
               Add another option
             </button>
           </div>
           <div>
             {editPoll && (
-              <Link href={`/polls/${editPoll.id}`} className="mr-4">
+              <Link href={`/polls/${editPoll.id}`} className="btn mr-4">
                 Cancel
               </Link>
             )}

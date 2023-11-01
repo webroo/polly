@@ -23,15 +23,16 @@ export default function EditParticipantRow({
   return (
     <div className="table-row relative h-36 outline outline-2 outline-gray-800 outline-offset-[-1px]">
       <form
+        id="ParticipantForm"
         action={formAction}
         ref={formRef}
-        className="contents  divide-x divide-gray-300"
+        className="contents divide-x divide-gray-300"
       >
         <input name="pollId" type="hidden" value={poll.id} />
         <input name="participantId" type="hidden" value={participant.id} />
         <div className="table-cell p-2 align-top">
           <label htmlFor="name" className="block mb-1.5">
-            Your name:
+            Your name
           </label>
           <input
             name="name"
@@ -50,11 +51,17 @@ export default function EditParticipantRow({
             />
           </div>
         ))}
-        <div className="absolute bottom-4 left-[5%] w-[90%] rounded p-2 bg-lime-400 text-center">
-          Update your details then <SubmitButton>Save</SubmitButton> your
-          changes, or <Link href={`/polls/${poll.id}`}>Cancel</Link>
-        </div>
       </form>
+      <div className="absolute bottom-4 left-[20rem] right-8 p-2 text-center bg-white rounded-md border border-gray-300 shadow-md">
+        Update your details then{' '}
+        <SubmitButton form="ParticipantForm" className="btn-primary py-2">
+          Save
+        </SubmitButton>{' '}
+        your changes, or{' '}
+        <Link href={`/polls/${poll.id}`} className="btn py-2">
+          Cancel
+        </Link>
+      </div>
     </div>
   );
 }
