@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { deleteParticipantAction } from '@/actions/poll';
 import { Poll, PollParticipant } from '@/types/poll';
 import { SubmitButton } from '@/components/SubmitButton';
+import { Check, Cross } from '@/components/Icons';
 
 export interface ParticipantRowProps {
   poll: Poll;
@@ -45,8 +46,15 @@ export default function ParticipantRow({
           </span>
         </div>
         {poll.options.map(option => (
-          <div key={option.id} className="table-cell p-2 text-center">
-            {participant.selectedOptions.includes(option.id) ? 'YES' : 'NO'}
+          <div
+            key={option.id}
+            className="table-cell p-2 align-middle text-center"
+          >
+            {participant.selectedOptions.includes(option.id) ? (
+              <Check />
+            ) : (
+              <Cross />
+            )}
           </div>
         ))}
       </form>
