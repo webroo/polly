@@ -21,7 +21,7 @@ export default function EditParticipantRow({
   const [_formState, formAction] = useFormState(updateParticipantAction, {});
 
   return (
-    <div className="table-row relative h-32">
+    <div className="table-row relative h-36 outline outline-2 outline-gray-800 outline-offset-[-1px]">
       <form
         action={formAction}
         ref={formRef}
@@ -39,7 +39,7 @@ export default function EditParticipantRow({
           />
         </div>
         {poll.options.map(option => (
-          <div key={option.id} className="table-cell p-2 pt-7 text-center">
+          <div key={option.id} className="table-cell p-2 pt-8 text-center">
             <input
               type="checkbox"
               name="selectedOptions[]"
@@ -48,14 +48,10 @@ export default function EditParticipantRow({
             />
           </div>
         ))}
-        <div className="absolute bottom-2 left-[5%] w-[90%] rounded p-2 bg-emerald-300 text-center">
-          <SubmitButton>Save</SubmitButton> or{' '}
-          <Link href={`/polls/${poll.id}`}>Cancel</Link> changes
+        <div className="absolute bottom-4 left-[5%] w-[90%] rounded p-2 bg-lime-400 text-center">
+          Update your details then <SubmitButton>Save</SubmitButton> your
+          changes, or <Link href={`/polls/${poll.id}`}>Cancel</Link>
         </div>
-        {/* <div className="table-cell">
-          <Link href={`/polls/${poll.id}`}>Cancel</Link>
-          <SubmitButton>Save</SubmitButton>
-        </div> */}
       </form>
     </div>
   );

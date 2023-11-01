@@ -22,7 +22,7 @@ export default function AddParticipantRow({ poll }: AddParticipantRowProps) {
   }, [formState.data]);
 
   return (
-    <div className="table-row relative h-36">
+    <div className="table-row relative h-36 outline outline-2 outline-gray-800 outline-offset-[-1px]">
       <form
         action={formAction}
         ref={formRef}
@@ -40,8 +40,8 @@ export default function AddParticipantRow({ poll }: AddParticipantRowProps) {
             <input type="checkbox" name="selectedOptions[]" value={option.id} />
           </div>
         ))}
-        <div className="absolute bottom-4 left-[5%] w-[90%] rounded p-2 bg-emerald-300 text-center">
-          Enter your name, select your options and click{' '}
+        <div className="absolute bottom-4 left-[5%] w-[90%] rounded p-2 text-center bg-lime-400">
+          Enter your name, select your options and{' '}
           <SubmitButton>Save</SubmitButton>
         </div>
       </form>

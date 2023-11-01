@@ -18,7 +18,7 @@ export default function PollTable({ poll, editParticipant }: PollTableProps) {
   const highestTotal = Math.max(...totals);
 
   return (
-    <div className="overflow-hidden border rounded-lg border-gray-300">
+    <div className="border border-gray-300">
       <div className="table w-full border-collapse divide-y divide-gray-300">
         <div className="table-header-group">
           <div className="table-row divide-x divide-gray-300">
