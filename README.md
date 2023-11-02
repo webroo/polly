@@ -1,7 +1,15 @@
+# Polly
+
+Polly helps you schedule events with your friends and colleagues.
+
+An experiment in using [React Server Components](https://vercel.com/blog/understanding-react-server-components) and [Server Actions](https://vercel.com/blog/understanding-react-server-components#server-actions-react%E2%80%99s-first-steps-into-mutability). Built using [Next.js](https://nextjs.org/) and [MongoDB](https://www.mongodb.com/).
+
+Server Components and Actions allow the site to be fully functional even with JavaScript disabled.
+
 ## Prerequisites
 
 - Node 18 (preferably via [nvm](https://github.com/nvm-sh/nvm))
-- Docker (for local development)
+- Docker (for local MongoDB)
 
 ## Getting Started
 
