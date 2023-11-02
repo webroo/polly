@@ -41,11 +41,13 @@ export default function EditParticipantRow({
             className="w-full"
           />
           <div className="absolute bottom-4 left-[20rem] right-8 p-2 text-center bg-white rounded-md border border-gray-300 shadow-md">
-            Update your details then{' '}
+            <span className="font-serif italic mr-2">
+              Update your details and
+            </span>
             <SubmitButton form="ParticipantForm" className="btn-primary py-2">
-              Save
-            </SubmitButton>{' '}
-            your changes, or{' '}
+              Save Changes
+            </SubmitButton>
+            <span className="font-serif italic mx-2">or</span>
             <Link href={`/polls/${poll.id}`} className="btn py-2">
               Cancel
             </Link>

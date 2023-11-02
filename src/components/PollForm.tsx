@@ -92,7 +92,9 @@ export default function PollForm({ editPoll }: PollFormProps) {
                 Cancel
               </Link>
             )}
-            <SubmitButton>Save</SubmitButton>
+            <SubmitButton>
+              {editPoll ? 'Save Changes' : 'Create Poll'}
+            </SubmitButton>
           </div>
         </div>
       </div>

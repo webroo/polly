@@ -36,9 +36,11 @@ export default function AddParticipantRow({ poll }: AddParticipantRowProps) {
           </label>
           <input name="name" required className="w-full" />
           <div className="absolute bottom-4 left-[20rem] right-8 p-2 text-center bg-white rounded-md border border-gray-300 shadow-md">
-            Enter your name, select your options and{' '}
+            <span className="font-serif italic mr-2">
+              Enter your name, select your options and
+            </span>
             <SubmitButton form="ParticipantForm" className="btn-primary py-2">
-              Save
+              Submit Response
             </SubmitButton>
           </div>
         </div>
