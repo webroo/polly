@@ -22,7 +22,7 @@ export default function AddParticipantRow({ poll }: AddParticipantRowProps) {
   }, [formState.data]);
 
   return (
-    <div className="table-row relative h-36 outline outline-2 outline-gray-800 outline-offset-[-1px]">
+    <div className="table-row relative h-36 bg-gray-500/5 outline outline-2 outline-gray-800 outline-offset-[-1px]">
       <form
         id="ParticipantForm"
         action={formAction}

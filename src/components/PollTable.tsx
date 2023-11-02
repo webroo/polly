@@ -19,54 +19,52 @@ export default function PollTable({ poll, editParticipant }: PollTableProps) {
   const highestTotal = Math.max(...totals);
 
   return (
-    <div className="border border-gray-300">
-      <div className="table table-fixed w-full border-collapse divide-y divide-gray-300">
-        <div className="table-header-group">
-          <div className="table-row divide-x divide-gray-300">
-            <div className="table-cell w-72 p-2 rounded-tl-sm" />
-            {poll.options.map(option => (
-              <div
-                key={option.id}
-                className="table-cell p-2 font-bold text-center"
-              >
-                {option.name}
-              </div>
-            ))}
-          </div>
+    <div className="table table-fixed w-full border-collapse border border-gray-300 divide-y divide-gray-300">
+      <div className="table-header-group">
+        <div className="table-row divide-x divide-gray-300">
+          <div className="table-cell w-72 p-2 rounded-tl-sm" />
+          {poll.options.map(option => (
+            <div
+              key={option.id}
+              className="table-cell p-2 font-bold text-center"
+            >
+              {option.name}
+            </div>
+          ))}
         </div>
-        <div className="table-row-group divide-y divide-gray-300">
-          {poll.participants.map(participant =>
-            participant.id === editParticipant?.id ? (
-              <EditParticipantRow
-                key={participant.id}
-                poll={poll}
-                participant={participant}
-              />
-            ) : (
-              <ParticipantRow
-                key={participant.id}
-                poll={poll}
-                participant={participant}
-              />
-            ),
-          )}
-          {!editParticipant && <AddParticipantRow poll={poll} />}
-        </div>
-        <div className="table-footer-group">
-          <div className="table-row divide-x divide-gray-300 italic">
-            <div className="table-cell px-2.5 py-2 align-middle">Totals</div>
-            {totals.map((value, index) => (
-              <div
-                key={index}
-                className={clsx({
-                  'table-cell p-4 text-center align-middle': true,
-                  'font-semibold text-2xl': value > 0 && value === highestTotal,
-                })}
-              >
-                {value}
-              </div>
-            ))}
-          </div>
+      </div>
+      <div className="table-row-group divide-y divide-gray-300">
+        {poll.participants.map(participant =>
+          participant.id === editParticipant?.id ? (
+            <EditParticipantRow
+              key={participant.id}
+              poll={poll}
+              participant={participant}
+            />
+          ) : (
+            <ParticipantRow
+              key={participant.id}
+              poll={poll}
+              participant={participant}
+            />
+          ),
+        )}
+        {!editParticipant && <AddParticipantRow poll={poll} />}
+      </div>
+      <div className="table-footer-group">
+        <div className="table-row divide-x divide-gray-300 italic">
+          <div className="table-cell px-2.5 py-2 align-middle">Totals</div>
+          {totals.map((value, index) => (
+            <div
+              key={index}
+              className={clsx({
+                'table-cell p-4 text-center align-middle': true,
+                'font-semibold text-2xl': value > 0 && value === highestTotal,
+              })}
+            >
+              {value}
+            </div>
+          ))}
         </div>
       </div>
     </div>
