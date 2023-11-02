@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import clsx from 'clsx';
 import { notFound } from 'next/navigation';
 import { getPoll } from '@/services/poll';
 import PollTable from '@/components/PollTable';
@@ -16,7 +17,12 @@ export default async function PollPage({ params }: PollPageProps) {
 
   return (
     <>
-      <div className="flex items-start justify-between gap-3 mb-5">
+      <div
+        className={clsx(
+          'flex items-start justify-between gap-3',
+          poll.description ? 'mb-5' : 'mb-10',
+        )}
+      >
         <h1>{poll.title}</h1>
         <div>
           <Link href={`/polls/${poll.id}/edit`} className="btn">
@@ -24,7 +30,7 @@ export default async function PollPage({ params }: PollPageProps) {
           </Link>
         </div>
       </div>
-      <h2 className="ml-0.5 mb-8">{poll.description}</h2>
+      {poll.description && <h2 className="ml-0.5 mb-8">{poll.description}</h2>}
       <PollTable poll={poll} />
     </>
   );
