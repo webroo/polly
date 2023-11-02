@@ -15,7 +15,9 @@ interface PollFormProps {
 }
 
 export default function PollForm({ pollTitle, editPoll }: PollFormProps) {
-  const [maxOptions, setMaxOptions] = useState(editPoll?.options.length ?? 5);
+  const [totalOptions, setTotalOptions] = useState(
+    editPoll?.options.length ?? 5,
+  );
 
   const action = editPoll ? updatePollAction : createPollAction;
 
@@ -61,7 +63,7 @@ export default function PollForm({ pollTitle, editPoll }: PollFormProps) {
             </span>
           </legend>
           <div className="grid grid-cols-[auto_1fr] items-center gap-2">
-            {Array.from({ length: maxOptions }).map((_, index) => (
+            {Array.from({ length: totalOptions }).map((_, index) => (
               <Fragment key={index}>
                 <label key={index} htmlFor={`options[${index}].name`}>
                   Option {index + 1}
@@ -82,10 +84,10 @@ export default function PollForm({ pollTitle, editPoll }: PollFormProps) {
         </fieldset>
         <div className="flex items-center justify-between">
           <div>
-            {maxOptions < 10 && (
+            {totalOptions < 10 && (
               <button
                 type="button"
-                onClick={() => setMaxOptions(value => value + 1)}
+                onClick={() => setTotalOptions(value => value + 1)}
                 className="btn"
               >
                 Add another option
