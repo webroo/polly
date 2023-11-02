@@ -16,17 +16,25 @@ export const pollFormSchema = z.object({
     .pipe(z.array(z.any()).min(2).max(10)),
 });
 
+export type PollForm = z.infer<typeof pollFormSchema>;
+
 export const addParticipantFormSchema = z.object({
   pollId: z.string().length(UNIQUE_ID_SIZE),
   name: z.string().trim().min(1).max(40),
   selectedOptions: z.array(z.string().length(UNIQUE_ID_SIZE)).default([]),
 });
 
+export type AddParticipantForm = z.infer<typeof addParticipantFormSchema>;
+
 export const editParticipantFormSchema = addParticipantFormSchema.extend({
   participantId: z.string().length(UNIQUE_ID_SIZE),
 });
+
+export type EditParticipantForm = z.infer<typeof editParticipantFormSchema>;
 
 export const deleteParticipantFormSchema = z.object({
   pollId: z.string().length(UNIQUE_ID_SIZE),
   participantId: z.string().length(UNIQUE_ID_SIZE),
 });
+
+export type DeleteParticipantForm = z.infer<typeof deleteParticipantFormSchema>;

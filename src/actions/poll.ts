@@ -10,6 +10,10 @@ import {
   addParticipantFormSchema,
   editParticipantFormSchema,
   deleteParticipantFormSchema,
+  DeleteParticipantForm,
+  EditParticipantForm,
+  AddParticipantForm,
+  PollForm,
 } from '@/schemas/poll';
 import {
   addParticipant,
@@ -22,7 +26,7 @@ import {
 export async function createPollAction(
   _prevState: ActionResult,
   formData: FormData,
-): Promise<ActionResult<Poll> | never> {
+): Promise<ActionResult<PollForm, Poll> | never> {
   const pollFormData = pollFormSchema.safeParse(parseFormData(formData));
 
   if (!pollFormData.success) {
@@ -42,7 +46,7 @@ export async function createPollAction(
 export async function updatePollAction(
   _prevState: ActionResult,
   formData: FormData,
-): Promise<ActionResult<Poll> | never> {
+): Promise<ActionResult<PollForm, Poll> | never> {
   const parsedFormData = parseFormData(formData);
 
   const validatedFormData = pollFormSchema.safeParse(parsedFormData);
@@ -65,7 +69,7 @@ export async function updatePollAction(
 export async function addParticipantAction(
   _prevState: ActionResult,
   formData: FormData,
-): Promise<ActionResult<PollParticipant>> {
+): Promise<ActionResult<AddParticipantForm, PollParticipant>> {
   const participantFormData = addParticipantFormSchema.safeParse(
     parseFormData(formData),
   );
@@ -88,7 +92,7 @@ export async function addParticipantAction(
 export async function updateParticipantAction(
   _prevState: ActionResult,
   formData: FormData,
-): Promise<ActionResult<PollParticipant> | never> {
+): Promise<ActionResult<EditParticipantForm, PollParticipant> | never> {
   const participantFormData = editParticipantFormSchema.safeParse(
     parseFormData(formData),
   );
@@ -111,7 +115,7 @@ export async function updateParticipantAction(
 export async function deleteParticipantAction(
   _prevState: ActionResult,
   formData: FormData,
-): Promise<ActionResult<boolean>> {
+): Promise<ActionResult<DeleteParticipantForm, boolean>> {
   const participantFormData = deleteParticipantFormSchema.safeParse(
     parseFormData(formData),
   );
