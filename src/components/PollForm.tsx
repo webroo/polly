@@ -1,11 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { useFormState } from 'react-dom';
+import Link from 'next/link';
 import { createPollAction, updatePollAction } from '@/actions/poll';
 import { SubmitButton } from '@/components/SubmitButton';
+import ErrorAlert from '@/components/ErrorAlert';
 import { Poll } from '@/types/poll';
-import Link from 'next/link';
+import { flattenValidationErrors } from '@/lib/zod';
 
 interface PollFormProps {
   pollTitle?: string;
@@ -19,15 +21,16 @@ export default function PollForm({ pollTitle, editPoll }: PollFormProps) {
 
   const [formState, formAction] = useFormState(action, {});
 
-  const { serverError, validationErrors } = formState;
-
   return (
     <form action={formAction}>
-      {serverError && <div>Sorry, there was a problem creating the poll</div>}
+      {formState.validationErrors && (
+        <ErrorAlert
+          title="Oops, there were errors with your submission"
+          messages={flattenValidationErrors(formState.validationErrors)}
+          className="mb-4"
+        />
+      )}
       <input name="pollId" type="hidden" value={editPoll?.id} />
-      {validationErrors?.title?._errors.map(error => (
-        <div key={error}>{error}</div>
-      ))}
       <div className="grid gap-6">
         <div>
           <label htmlFor="title" className="block mb-2">
@@ -57,12 +60,9 @@ export default function PollForm({ pollTitle, editPoll }: PollFormProps) {
               For example: &quot;Thu 12th&quot;, &quot;Fri 9pm&quot;, etc.
             </span>
           </legend>
-          {validationErrors?.options?._errors.map(error => (
-            <div key={error}>{error}</div>
-          ))}
           <div className="grid grid-cols-[auto_1fr] items-center gap-2">
             {Array.from({ length: maxOptions }).map((_, index) => (
-              <>
+              <Fragment key={index}>
                 <label key={index} htmlFor={`options[${index}].name`}>
                   Option {index + 1}
                 </label>
@@ -76,7 +76,7 @@ export default function PollForm({ pollTitle, editPoll }: PollFormProps) {
                   type="hidden"
                   value={editPoll?.options[index]?.id}
                 />
-              </>
+              </Fragment>
             ))}
           </div>
         </fieldset>

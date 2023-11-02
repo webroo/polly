@@ -1,7 +1,7 @@
-import { ZodFormattedError } from 'zod';
+import { typeToFlattenedError } from 'zod';
 
 export interface ActionResult<T = any> {
   data?: T;
   serverError?: string;
-  validationErrors?: ZodFormattedError<T>;
+  validationErrors?: typeToFlattenedError<T>;
 }

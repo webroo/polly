@@ -26,7 +26,7 @@ export async function createPollAction(
   const pollFormData = pollFormSchema.safeParse(parseFormData(formData));
 
   if (!pollFormData.success) {
-    return { validationErrors: pollFormData.error.format() };
+    return { validationErrors: pollFormData.error.flatten() };
   }
 
   const pollId = await createPoll(
@@ -48,7 +48,7 @@ export async function updatePollAction(
   const validatedFormData = pollFormSchema.safeParse(parsedFormData);
 
   if (!validatedFormData.success) {
-    return { validationErrors: validatedFormData.error.format() };
+    return { validationErrors: validatedFormData.error.flatten() };
   }
 
   const pollId = await udpatePoll(
@@ -71,7 +71,7 @@ export async function addParticipantAction(
   );
 
   if (!participantFormData.success) {
-    return { validationErrors: participantFormData.error.format() };
+    return { validationErrors: participantFormData.error.flatten() };
   }
 
   const participant = await addParticipant(
@@ -94,7 +94,7 @@ export async function updateParticipantAction(
   );
 
   if (!participantFormData.success) {
-    return { validationErrors: participantFormData.error.format() };
+    return { validationErrors: participantFormData.error.flatten() };
   }
 
   await updateParticipant(
@@ -117,7 +117,7 @@ export async function deleteParticipantAction(
   );
 
   if (!participantFormData.success) {
-    return { validationErrors: participantFormData.error.format() };
+    return { validationErrors: participantFormData.error.flatten() };
   }
 
   const success = await deleteParticipant(
