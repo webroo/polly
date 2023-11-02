@@ -16,7 +16,7 @@ export default async function PollPage({ params }: PollPageProps) {
 
   return (
     <>
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-start justify-between gap-3 mb-4">
         <h1>{poll.title}</h1>
         <div>
           <Link href={`/polls/${poll.id}/edit`} className="btn">

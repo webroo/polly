@@ -78,13 +78,15 @@ export default function PollForm({ editPoll }: PollFormProps) {
         </fieldset>
         <div className="flex items-center justify-between">
           <div>
-            <button
-              type="button"
-              onClick={() => setMaxOptions(value => value + 1)}
-              className="btn"
-            >
-              Add another option
-            </button>
+            {maxOptions < 10 && (
+              <button
+                type="button"
+                onClick={() => setMaxOptions(value => value + 1)}
+                className="btn"
+              >
+                Add another option
+              </button>
+            )}
           </div>
           <div>
             {editPoll && (

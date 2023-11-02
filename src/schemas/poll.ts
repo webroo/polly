@@ -3,8 +3,8 @@ import { UNIQUE_ID_SIZE } from '@/lib/uniqueid';
 
 export const pollFormSchema = z.object({
   pollId: z.union([z.string().length(0), z.string().length(UNIQUE_ID_SIZE)]),
-  title: z.string().trim().min(1).max(100),
-  description: z.string().trim().max(100),
+  title: z.string().trim().min(1).max(48),
+  description: z.string().trim().max(108),
   options: z
     .array(
       z.object({
