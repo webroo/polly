@@ -8,10 +8,11 @@ import { Poll } from '@/types/poll';
 import Link from 'next/link';
 
 interface PollFormProps {
+  pollTitle?: string;
   editPoll?: Poll;
 }
 
-export default function PollForm({ editPoll }: PollFormProps) {
+export default function PollForm({ pollTitle, editPoll }: PollFormProps) {
   const [maxOptions, setMaxOptions] = useState(editPoll?.options.length ?? 5);
 
   const action = editPoll ? updatePollAction : createPollAction;
@@ -27,14 +28,14 @@ export default function PollForm({ editPoll }: PollFormProps) {
       {validationErrors?.title?._errors.map(error => (
         <div key={error}>{error}</div>
       ))}
-      <div className="grid gap-7">
+      <div className="grid gap-6">
         <div>
           <label htmlFor="title" className="block mb-2">
-            Enter the name of your poll
+            Name of your poll
           </label>
           <input
             name="title"
-            defaultValue={editPoll?.title}
+            defaultValue={editPoll?.title ?? pollTitle}
             required
             className="w-full"
           />
@@ -49,32 +50,35 @@ export default function PollForm({ editPoll }: PollFormProps) {
             className="w-full"
           />
         </div>
-        <fieldset className="grid gap-2">
-          <legend className="mb-2">List some dates, times or options</legend>
+        <fieldset className="">
+          <legend className="mb-2">
+            List some dates, times or options.{' '}
+            <span className="font-serif italic mb-2">
+              For example: &quot;Thu 12th&quot;, &quot;Fri 9pm&quot;, etc.
+            </span>
+          </legend>
           {validationErrors?.options?._errors.map(error => (
             <div key={error}>{error}</div>
           ))}
-          {Array.from({ length: maxOptions }).map((_, index) => (
-            <div key={index} className="flex items-center">
-              <label
-                key={index}
-                htmlFor={`options[${index}].name`}
-                className="mr-3"
-              >
-                Option {index + 1}
-              </label>
-              <input
-                name={`options[${index}].name`}
-                defaultValue={editPoll?.options[index]?.name}
-                className="flex-1"
-              />
-              <input
-                name={`options[${index}].id`}
-                type="hidden"
-                value={editPoll?.options[index]?.id}
-              />
-            </div>
-          ))}
+          <div className="grid grid-cols-[auto_1fr] items-center gap-2">
+            {Array.from({ length: maxOptions }).map((_, index) => (
+              <>
+                <label key={index} htmlFor={`options[${index}].name`}>
+                  Option {index + 1}
+                </label>
+                <input
+                  name={`options[${index}].name`}
+                  defaultValue={editPoll?.options[index]?.name}
+                  className=""
+                />
+                <input
+                  name={`options[${index}].id`}
+                  type="hidden"
+                  value={editPoll?.options[index]?.id}
+                />
+              </>
+            ))}
+          </div>
         </fieldset>
         <div className="flex items-center justify-between">
           <div>

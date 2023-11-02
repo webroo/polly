@@ -16,7 +16,7 @@ export default async function PollPage({ params }: PollPageProps) {
 
   return (
     <>
-      <div className="flex items-start justify-between gap-3 mb-4">
+      <div className="flex items-start justify-between gap-3 mb-5">
         <h1>{poll.title}</h1>
         <div>
           <Link href={`/polls/${poll.id}/edit`} className="btn">
@@ -24,7 +24,7 @@ export default async function PollPage({ params }: PollPageProps) {
           </Link>
         </div>
       </div>
-      <h2 className="ml-0.5 mb-6">{poll.description}</h2>
+      <h2 className="ml-0.5 mb-8">{poll.description}</h2>
       <PollTable poll={poll} />
     </>
   );
