@@ -34,7 +34,7 @@ export default async function EditParticipantPage({
           </Link>
         </div>
       </div>
-      <p className="mb-6">{poll.description}</p>
+      <h2 className="ml-0.5 mb-6">{poll.description}</h2>
       <PollTable poll={poll} editParticipant={editParticipant} />
     </>
   );

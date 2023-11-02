@@ -27,7 +27,7 @@ export default function PollForm({ editPoll }: PollFormProps) {
       {validationErrors?.title?._errors.map(error => (
         <div key={error}>{error}</div>
       ))}
-      <div className="grid gap-6">
+      <div className="grid gap-7">
         <div>
           <label htmlFor="title" className="block mb-2">
             Enter the name of your poll

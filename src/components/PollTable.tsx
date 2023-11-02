@@ -20,7 +20,7 @@ export default function PollTable({ poll, editParticipant }: PollTableProps) {
 
   return (
     <div className="border border-gray-300">
-      <div className="table w-full border-collapse divide-y divide-gray-300">
+      <div className="table table-fixed w-full border-collapse divide-y divide-gray-300">
         <div className="table-header-group">
           <div className="table-row divide-x divide-gray-300">
             <div className="table-cell w-72 p-2 rounded-tl-sm" />
@@ -54,7 +54,7 @@ export default function PollTable({ poll, editParticipant }: PollTableProps) {
         </div>
         <div className="table-footer-group">
           <div className="table-row divide-x divide-gray-300 italic">
-            <div className="table-cell p-2 align-middle">Totals</div>
+            <div className="table-cell px-2.5 py-2 align-middle">Totals</div>
             {totals.map((value, index) => (
               <div
                 key={index}

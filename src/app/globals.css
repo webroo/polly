@@ -16,12 +16,17 @@
   } */
 
   body {
+    @apply antialiased;
     color: rgb(var(--foreground-rgb));
     background: rgb(var(--background-rgb));
   }
 
   h1 {
-    @apply text-3xl;
+    @apply text-4xl font-semibold;
+  }
+
+  h2 {
+    @apply font-serif italic text-xl;
   }
 
   a {

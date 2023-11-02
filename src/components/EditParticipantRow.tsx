@@ -30,7 +30,7 @@ export default function EditParticipantRow({
       >
         <input name="pollId" type="hidden" value={poll.id} />
         <input name="participantId" type="hidden" value={participant.id} />
-        <div className="table-cell p-2 align-top">
+        <div className="table-cell px-2.5 py-2 align-top">
           <label htmlFor="name" className="block mb-1.5">
             Your name
           </label>
@@ -40,9 +40,22 @@ export default function EditParticipantRow({
             required
             className="w-full"
           />
+          <div className="absolute bottom-4 left-[20rem] right-8 p-2 text-center bg-white rounded-md border border-gray-300 shadow-md">
+            Update your details then{' '}
+            <SubmitButton form="ParticipantForm" className="btn-primary py-2">
+              Save
+            </SubmitButton>{' '}
+            your changes, or{' '}
+            <Link href={`/polls/${poll.id}`} className="btn py-2">
+              Cancel
+            </Link>
+          </div>
         </div>
         {poll.options.map(option => (
-          <div key={option.id} className="table-cell p-2 pt-8 text-center">
+          <div
+            key={option.id}
+            className="table-cell px-2.5 py-2 pt-8 text-center"
+          >
             <input
               type="checkbox"
               name="selectedOptions[]"
@@ -52,16 +65,6 @@ export default function EditParticipantRow({
           </div>
         ))}
       </form>
-      <div className="absolute bottom-4 left-[20rem] right-8 p-2 text-center bg-white rounded-md border border-gray-300 shadow-md">
-        Update your details then{' '}
-        <SubmitButton form="ParticipantForm" className="btn-primary py-2">
-          Save
-        </SubmitButton>{' '}
-        your changes, or{' '}
-        <Link href={`/polls/${poll.id}`} className="btn py-2">
-          Cancel
-        </Link>
-      </div>
     </div>
   );
 }

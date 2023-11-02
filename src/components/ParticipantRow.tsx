@@ -23,7 +23,7 @@ export default function ParticipantRow({
       <form action={formAction} className="contents divide-x divide-gray-300">
         <input name="pollId" type="hidden" value={poll.id} />
         <input name="participantId" type="hidden" value={participant.id} />
-        <div className="table-cell p-2">
+        <div className="table-cell px-2.5 py-2">
           <span className="font-bold">{participant.name}</span>{' '}
           <span className="text-sm text-gray-600">
             <Link
@@ -47,7 +47,7 @@ export default function ParticipantRow({
         {poll.options.map(option => (
           <div
             key={option.id}
-            className="table-cell p-2 align-middle text-center"
+            className="table-cell px-2.5 py-2 align-middle text-center"
           >
             {participant.selectedOptions.includes(option.id) ? (
               <Check />
