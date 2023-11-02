@@ -3,8 +3,10 @@
 import { useEffect, useRef } from 'react';
 import { useFormState } from 'react-dom';
 import { addParticipantAction } from '@/actions/poll';
+import { flattenValidationErrors } from '@/lib/zod';
 import { Poll } from '@/types/poll';
 import { SubmitButton } from '@/components/SubmitButton';
+import ErrorAlert from '@/components/ErrorAlert';
 
 export interface AddParticipantRowProps {
   poll: Poll;
@@ -35,13 +37,20 @@ export default function AddParticipantRow({ poll }: AddParticipantRowProps) {
             Your name
           </label>
           <input name="name" required className="w-full" />
-          <div className="absolute bottom-4 left-[20rem] right-8 p-2 text-center bg-white rounded-md border border-gray-300 shadow-md">
+          <div className="absolute left-[20rem] right-8 p-2 text-center bg-white rounded-md border border-gray-300 shadow-md">
             <span className="font-serif italic mr-2">
               Enter your name, select your options and
             </span>
             <SubmitButton form="ParticipantForm" className="btn-primary py-2">
               Submit Response
             </SubmitButton>
+            {formState.validationErrors && (
+              <ErrorAlert
+                title="Oops, there were errors with your submission"
+                messages={flattenValidationErrors(formState.validationErrors)}
+                className="mt-2"
+              />
+            )}
           </div>
         </div>
         {poll.options.map(option => (

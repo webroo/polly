@@ -4,8 +4,10 @@ import { useRef } from 'react';
 import { useFormState } from 'react-dom';
 import Link from 'next/link';
 import { updateParticipantAction } from '@/actions/poll';
+import { flattenValidationErrors } from '@/lib/zod';
 import { Poll, PollParticipant } from '@/types/poll';
 import { SubmitButton } from '@/components/SubmitButton';
+import ErrorAlert from '@/components/ErrorAlert';
 
 export interface EditParticipantRowProps {
   poll: Poll;
@@ -18,7 +20,7 @@ export default function EditParticipantRow({
 }: EditParticipantRowProps) {
   const formRef = useRef<HTMLFormElement>(null);
 
-  const [_formState, formAction] = useFormState(updateParticipantAction, {});
+  const [formState, formAction] = useFormState(updateParticipantAction, {});
 
   return (
     <div className="table-row relative h-36 bg-gray-500/5 outline outline-2 outline-gray-800 outline-offset-[-1px]">
@@ -40,7 +42,7 @@ export default function EditParticipantRow({
             required
             className="w-full"
           />
-          <div className="absolute bottom-4 left-[20rem] right-8 p-2 text-center bg-white rounded-md border border-gray-300 shadow-md">
+          <div className="absolute left-[20rem] right-8 p-2 text-center bg-white rounded-md border border-gray-300 shadow-md">
             <span className="font-serif italic mr-2">
               Update your details and
             </span>
@@ -51,6 +53,13 @@ export default function EditParticipantRow({
             <Link href={`/polls/${poll.id}`} className="btn py-2">
               Cancel
             </Link>
+            {formState.validationErrors && (
+              <ErrorAlert
+                title="Oops, there were errors with your submission"
+                messages={flattenValidationErrors(formState.validationErrors)}
+                className="mt-2"
+              />
+            )}
           </div>
         </div>
         {poll.options.map(option => (
