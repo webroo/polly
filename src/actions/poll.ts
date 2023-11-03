@@ -19,7 +19,7 @@ import {
   addParticipant,
   createPoll,
   deleteParticipant,
-  udpatePoll,
+  updatePoll,
   updateParticipant,
 } from '@/services/poll';
 
@@ -55,7 +55,7 @@ export async function updatePollAction(
     return { validationErrors: validatedFormData.error.flatten() };
   }
 
-  const pollId = await udpatePoll(
+  const pollId = await updatePoll(
     validatedFormData.data.pollId,
     validatedFormData.data.title,
     validatedFormData.data.description,

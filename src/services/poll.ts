@@ -35,7 +35,7 @@ export async function createPoll(
   return poll.id;
 }
 
-export async function udpatePoll(
+export async function updatePoll(
   pollId: string,
   title: string,
   description: string,

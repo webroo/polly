@@ -42,17 +42,19 @@ export default function EditParticipantRow({
             required
             className="w-full"
           />
-          <div className="absolute left-[20rem] right-8 p-2 text-center bg-white rounded-md border border-gray-300 shadow-md">
-            <span className="font-serif italic mr-2">
-              Update your details and
-            </span>
-            <SubmitButton form="ParticipantForm" className="btn-primary py-2">
-              Save Changes
-            </SubmitButton>
-            <span className="font-serif italic mx-2">or</span>
-            <Link href={`/polls/${poll.id}`} className="btn py-2">
-              Cancel
-            </Link>
+          <div className="absolute left-[20rem] right-8 p-2 bg-white rounded-md border border-gray-300 shadow-md">
+            <div className="text-center">
+              <span className="font-serif italic mr-2">
+                Update your details and
+              </span>
+              <SubmitButton form="ParticipantForm" className="btn-primary py-2">
+                Save Changes
+              </SubmitButton>
+              <span className="font-serif italic mx-2">or</span>
+              <Link href={`/polls/${poll.id}`} className="btn py-2">
+                Cancel
+              </Link>
+            </div>
             {formState.validationErrors && (
               <ErrorAlert
                 title="Oops, there were errors with your submission"
