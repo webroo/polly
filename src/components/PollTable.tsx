@@ -1,8 +1,7 @@
 import clsx from 'clsx';
 import { Poll, PollParticipant } from '@/types/poll';
 import ParticipantRow from './ParticipantRow';
-import AddParticipantRow from './AddParticipantRow';
-import EditParticipantRow from './EditParticipantRow';
+import UpdateParticipantRow from './UpdateParticipantRow';
 
 interface PollTableProps {
   poll: Poll;
@@ -36,7 +35,7 @@ export default function PollTable({ poll, editParticipant }: PollTableProps) {
       <div className="table-row-group divide-y divide-gray-300">
         {poll.participants.map(participant =>
           participant.id === editParticipant?.id ? (
-            <EditParticipantRow
+            <UpdateParticipantRow
               key={participant.id}
               poll={poll}
               participant={participant}
@@ -49,7 +48,7 @@ export default function PollTable({ poll, editParticipant }: PollTableProps) {
             />
           ),
         )}
-        {!editParticipant && <AddParticipantRow poll={poll} />}
+        {!editParticipant && <UpdateParticipantRow poll={poll} />}
       </div>
       <div className="table-footer-group">
         <div className="table-row divide-x divide-gray-300 italic">
