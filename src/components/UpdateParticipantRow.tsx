@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { addParticipantAction, updateParticipantAction } from '@/actions/poll';
 import { flattenValidationErrors } from '@/lib/zod';
 import { Poll, PollParticipant } from '@/types/poll';
-import { SubmitButton } from '@/components/SubmitButton';
+import SubmitButton from '@/components/SubmitButton';
 import ErrorAlert from '@/components/ErrorAlert';
 
 export interface UpdateParticipantRowProps {

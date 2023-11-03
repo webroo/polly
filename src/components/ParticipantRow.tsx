@@ -4,7 +4,7 @@ import { useFormState } from 'react-dom';
 import Link from 'next/link';
 import { deleteParticipantAction } from '@/actions/poll';
 import { Poll, PollParticipant } from '@/types/poll';
-import { SubmitButton } from '@/components/SubmitButton';
+import SubmitButton from '@/components/SubmitButton';
 import { CheckIcon, CrossIcon } from '@/components/Icons';
 
 export interface ParticipantRowProps {

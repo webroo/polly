@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 import { useFormStatus } from 'react-dom';
 
-export function SubmitButton({
+export default function SubmitButton({
   children,
   onClick,
   className,
