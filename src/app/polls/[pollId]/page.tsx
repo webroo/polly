@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { notFound } from 'next/navigation';
@@ -7,6 +8,15 @@ import Footer from '@/components/Footer';
 
 interface PollPageProps {
   params: { pollId: string };
+}
+
+export async function generateMetadata({
+  params,
+}: PollPageProps): Promise<Metadata> {
+  const poll = await getPoll(params.pollId);
+  return {
+    title: `Polly: ${poll?.title}`,
+  };
 }
 
 export default async function PollPage({ params }: PollPageProps) {

@@ -1,19 +1,20 @@
+import { cache } from 'react';
 import { connectDB } from '@/lib/mongodb';
 import { uniqueid } from '@/lib/uniqueid';
 import { PollParticipant, Poll, PollOption } from '@/types/poll';
 
-export async function getPoll(id: string): Promise<Poll | null> {
+export const getPoll = cache(async (id: string): Promise<Poll | null> => {
   return (await connectDB())
     .collection('polls')
     .findOne<Poll>({ id }, { projection: { _id: 0 } });
-}
+});
 
-export async function getPolls(): Promise<Poll[]> {
+export const getPolls = cache(async (): Promise<Poll[]> => {
   return (await connectDB())
     .collection('polls')
     .find<Poll>({}, { projection: { _id: 0 } })
     .toArray();
-}
+});
 
 export async function createPoll(
   title: string,
