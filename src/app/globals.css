@@ -39,14 +39,14 @@
 
   input {
     @apply px-3 py-1.5;
-    @apply rounded-md border-gray-300 shadow-sm;
+    @apply rounded-md border border-gray-300 shadow-sm;
     @apply focus:border-transparent focus:ring-0 focus:outline-2 focus:outline-offset-[-2px] focus:outline-green-600;
   }
 
   input[type="checkbox"] {
     @apply w-[1.1rem] h-[1.1rem];
     @apply text-green-600;
-    @apply rounded border-gray-300 shadow-sm;
+    @apply rounded border border-gray-300 shadow-sm;
     @apply focus:border-green-600 focus:ring focus:ring-offset-0 focus:ring-green-600 focus:ring-opacity-30;
   }
 

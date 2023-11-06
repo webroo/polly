@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { notFound } from 'next/navigation';
 import { getPoll } from '@/services/poll';
 import PollTable from '@/components/PollTable';
+import Footer from '@/components/Footer';
 
 interface PollPageProps {
   params: { pollId: string };
@@ -32,6 +33,7 @@ export default async function PollPage({ params }: PollPageProps) {
       </div>
       {poll.description && <h2 className="ml-0.5 mb-8">{poll.description}</h2>}
       <PollTable poll={poll} />
+      <Footer poll={poll} />
     </>
   );
 }
