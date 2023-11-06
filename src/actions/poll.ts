@@ -14,6 +14,7 @@ import {
   EditParticipantForm,
   AddParticipantForm,
   PollForm,
+  MAX_PARTICIPANTS,
 } from '@/schemas/poll';
 import {
   addParticipant,
@@ -21,6 +22,7 @@ import {
   deleteParticipant,
   updatePoll,
   updateParticipant,
+  getPoll,
 } from '@/services/poll';
 
 export async function createPollAction(
@@ -76,6 +78,12 @@ export async function addParticipantAction(
 
   if (!participantFormData.success) {
     return { validationErrors: participantFormData.error.flatten() };
+  }
+
+  const poll = await getPoll(participantFormData.data.pollId);
+
+  if (poll && poll.participants.length >= MAX_PARTICIPANTS) {
+    return { serverError: 'Max participants reached' };
   }
 
   const participant = await addParticipant(

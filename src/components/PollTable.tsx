@@ -1,7 +1,9 @@
 import clsx from 'clsx';
 import { Poll, PollParticipant } from '@/types/poll';
-import ParticipantRow from './ParticipantRow';
-import UpdateParticipantRow from './UpdateParticipantRow';
+import { MAX_PARTICIPANTS } from '@/schemas/poll';
+import ParticipantRow from '@/components/ParticipantRow';
+import UpdateParticipantRow from '@/components/UpdateParticipantRow';
+import MaxParticipantRow from '@/components/MaxParticipantRow';
 
 interface PollTableProps {
   poll: Poll;
@@ -48,7 +50,11 @@ export default function PollTable({ poll, editParticipant }: PollTableProps) {
             />
           ),
         )}
-        {!editParticipant && <UpdateParticipantRow poll={poll} />}
+        {poll.participants.length >= MAX_PARTICIPANTS ? (
+          <MaxParticipantRow poll={poll} />
+        ) : (
+          !editParticipant && <UpdateParticipantRow poll={poll} />
+        )}
       </div>
       <div className="table-footer-group">
         <div className="table-row divide-x divide-gray-300 italic">
