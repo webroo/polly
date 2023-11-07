@@ -24,25 +24,27 @@ export default function ParticipantRow({
         <input name="pollId" type="hidden" value={poll.id} />
         <input name="participantId" type="hidden" value={participant.id} />
         <div className="table-cell px-2.5 py-2">
-          <span className="font-bold">{participant.name}</span>{' '}
-          <span className="text-sm text-gray-600">
-            <Link
-              href={`/polls/${poll.id}/participants/${participant.id}/edit`}
-            >
-              Edit
-            </Link>{' '}
-            or{' '}
-            <SubmitButton
-              className="link"
-              onClick={e =>
-                confirm('Delete this response?')
-                  ? undefined // formRef.current?.reset()
-                  : e.preventDefault()
-              }
-            >
-              Delete
-            </SubmitButton>
-          </span>
+          <span className="font-bold">{participant.name}</span>
+          {!poll.closed && (
+            <span className="text-sm text-gray-600 ml-1">
+              <Link
+                href={`/polls/${poll.id}/participants/${participant.id}/edit`}
+              >
+                Edit
+              </Link>{' '}
+              or{' '}
+              <SubmitButton
+                className="link"
+                onClick={e =>
+                  confirm('Do you want to delete this response?')
+                    ? undefined
+                    : e.preventDefault()
+                }
+              >
+                Delete
+              </SubmitButton>
+            </span>
+          )}
         </div>
         {poll.options.map(option => (
           <div

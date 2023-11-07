@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import clsx from 'clsx';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { getPoll } from '@/services/poll';
 import PollTable from '@/components/PollTable';
 import Footer from '@/components/Footer';
@@ -28,6 +28,10 @@ export default async function EditParticipantPage({
     notFound();
   }
 
+  if (poll.closed) {
+    redirect(`/polls/${poll.id}`);
+  }
+
   const editParticipant = poll.participants.find(
     participant => participant.id === params.participantId,
   );
@@ -44,12 +48,14 @@ export default async function EditParticipantPage({
           poll.description ? 'mb-5' : 'mb-10',
         )}
       >
-        <h1 className="">{poll.title}</h1>
-        <div>
-          <Link href={`/polls/${poll.id}/edit`} className="btn">
-            Edit this poll
-          </Link>
-        </div>
+        <h1>{poll.title}</h1>
+        {!poll.closed && (
+          <div>
+            <Link href={`/polls/${poll.id}/edit`} className="btn">
+              Edit this poll
+            </Link>
+          </div>
+        )}
       </div>
       {poll.description && <h2 className="ml-0.5 mb-8">{poll.description}</h2>}
       <PollTable poll={poll} editParticipant={editParticipant} />

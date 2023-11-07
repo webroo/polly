@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { getPoll } from '@/services/poll';
 import PollForm from '@/components/PollForm';
 
@@ -21,6 +21,10 @@ export default async function EditPollPage({ params }: EditPollPageProps) {
 
   if (!poll) {
     notFound();
+  }
+
+  if (poll.closed) {
+    redirect(`/polls/${poll.id}`);
   }
 
   return (

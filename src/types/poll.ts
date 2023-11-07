@@ -4,6 +4,7 @@ export interface Poll {
   description: string;
   options: PollOption[];
   participants: PollParticipant[];
+  closed: boolean;
 }
 
 export interface PollOption {

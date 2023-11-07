@@ -15,6 +15,8 @@ import {
   AddParticipantForm,
   PollForm,
   MAX_PARTICIPANTS,
+  ClosePollForm,
+  closePollFormSchema,
 } from '@/schemas/poll';
 import {
   addParticipant,
@@ -23,6 +25,7 @@ import {
   updatePoll,
   updateParticipant,
   getPoll,
+  closePoll,
 } from '@/services/poll';
 
 export async function createPollAction(
@@ -136,6 +139,23 @@ export async function deleteParticipantAction(
     participantFormData.data.pollId,
     participantFormData.data.participantId,
   );
+
+  revalidatePath('/polls/[pollId]', 'page');
+
+  return { data: success };
+}
+
+export async function closePollAction(
+  _prevState: ActionResult,
+  formData: FormData,
+): Promise<ActionResult<ClosePollForm, boolean>> {
+  const pollFormData = closePollFormSchema.safeParse(parseFormData(formData));
+
+  if (!pollFormData.success) {
+    return { validationErrors: pollFormData.error.flatten() };
+  }
+
+  const success = await closePoll(pollFormData.data.pollId);
 
   revalidatePath('/polls/[pollId]', 'page');
 

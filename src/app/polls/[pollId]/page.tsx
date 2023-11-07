@@ -35,11 +35,6 @@ export default async function PollPage({ params }: PollPageProps) {
         )}
       >
         <h1>{poll.title}</h1>
-        <div>
-          <Link href={`/polls/${poll.id}/edit`} className="btn">
-            Edit this poll
-          </Link>
-        </div>
       </div>
       {poll.description && <h2 className="ml-0.5 mb-8">{poll.description}</h2>}
       <PollTable poll={poll} />

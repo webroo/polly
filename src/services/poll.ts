@@ -25,6 +25,7 @@ export async function createPoll(
     id: uniqueid(),
     title,
     description,
+    closed: false,
     participants: [],
     options: options.map(option => ({ ...option, id: uniqueid() })),
   };
@@ -110,6 +111,14 @@ export async function deleteParticipant(
       { id: pollId },
       { $pull: { participants: { id: participantId } } },
     );
+
+  return true;
+}
+
+export async function closePoll(pollId: string): Promise<boolean> {
+  await (await connectDB())
+    .collection('polls')
+    .updateOne({ id: pollId }, { $set: { closed: true } });
 
   return true;
 }

@@ -55,7 +55,7 @@ export default function PollForm({ pollTitle, editPoll }: PollFormProps) {
             className="w-full"
           />
         </div>
-        <fieldset className="">
+        <fieldset>
           <legend className="mb-2">
             List some dates, times or options.{' '}
             <span className="font-serif italic mb-2">
@@ -71,7 +71,6 @@ export default function PollForm({ pollTitle, editPoll }: PollFormProps) {
                 <input
                   name={`options[${index}].name`}
                   defaultValue={editPoll?.options[index]?.name}
-                  className=""
                 />
                 <input
                   name={`options[${index}].id`}
