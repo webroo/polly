@@ -67,8 +67,8 @@ export default function Footer({ poll }: FooterProps) {
       <div>
         {!poll.closed && (
           <form action={formAction}>
-            <h2 className="mb-2">Poll status</h2>
             <input name="pollId" type="hidden" value={poll.id} />
+            <h2 className="mb-2">Poll status</h2>
             <div className="mb-2 text-sm">
               This poll is still open for voting. You can:
             </div>

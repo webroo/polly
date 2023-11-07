@@ -33,7 +33,6 @@ export default function UpdateParticipantRow({
   return (
     <div className="table-row relative h-36 bg-gray-500/5 outline outline-2 outline-gray-800 outline-offset-[-1px]">
       <form
-        id="ParticipantForm"
         action={formAction}
         ref={formRef}
         className="contents divide-x divide-gray-300"
@@ -56,10 +55,7 @@ export default function UpdateParticipantRow({
                 <span className="font-serif italic mr-2">
                   Update your details and
                 </span>
-                <SubmitButton
-                  form="ParticipantForm"
-                  className="btn-primary py-2"
-                >
+                <SubmitButton className="btn-primary py-2">
                   Save Changes
                 </SubmitButton>
                 <span className="font-serif italic mx-2">or</span>
@@ -72,10 +68,7 @@ export default function UpdateParticipantRow({
                 <span className="font-serif italic mr-2">
                   Enter your name, select your options and
                 </span>
-                <SubmitButton
-                  form="ParticipantForm"
-                  className="btn-primary py-2"
-                >
+                <SubmitButton className="btn-primary py-2">
                   Submit Response
                 </SubmitButton>
               </div>
