@@ -122,3 +122,11 @@ export async function closePoll(pollId: string): Promise<boolean> {
 
   return true;
 }
+
+export async function reopenPoll(pollId: string): Promise<boolean> {
+  await (await connectDB())
+    .collection('polls')
+    .updateOne({ id: pollId }, { $set: { closed: false } });
+
+  return true;
+}

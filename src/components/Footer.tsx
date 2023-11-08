@@ -6,7 +6,7 @@ import Link from 'next/link';
 import clsx from 'clsx';
 import { Poll } from '@/types/poll';
 import SubmitButton from '@/components/SubmitButton';
-import { closePollAction } from '@/actions/poll';
+import { closePollAction, reopenPollAction } from '@/actions/poll';
 import {
   ClipboardCheckedIcon,
   ClipboardListIcon,
@@ -21,7 +21,8 @@ export default function Footer({ poll }: FooterProps) {
   const [pageUrl, setPageUrl] = useState('');
   const [copied, setCopied] = useState(false);
 
-  const [_formState, formAction] = useFormState(closePollAction, {});
+  const [, closePollFormAction] = useFormState(closePollAction, {});
+  const [, reopenPollFormAction] = useFormState(reopenPollAction, {});
 
   function copyLink() {
     navigator.clipboard.writeText(pageUrl);
@@ -68,19 +69,31 @@ export default function Footer({ poll }: FooterProps) {
           </button>
         </div>
       </div>
-      <div>
+      <form>
+        <input name="pollId" type="hidden" value={poll.id} />
         <h2 className="mb-2">
           {poll.closed ? 'Poll concluded' : 'Poll controls'}
         </h2>
         <div className="mb-2 text-sm">
           {poll.closed
             ? 'This poll is now closed, thank you for participating.'
-            : 'This poll is still open for voting, you can:'}
+            : 'This poll is still open for voting.'}
         </div>
-        {!poll.closed && (
-          <form action={formAction}>
-            <input name="pollId" type="hidden" value={poll.id} />
-            <div className="flex items-stretch h-9">
+        <div className="flex items-stretch h-9">
+          {poll.closed ? (
+            <SubmitButton
+              className="btn text-xs font-normal text-neutral-600 py-0"
+              formAction={reopenPollFormAction}
+              onClick={e =>
+                confirm('Do you want to reopen this poll?')
+                  ? undefined
+                  : e.preventDefault()
+              }
+            >
+              Reopen this poll
+            </SubmitButton>
+          ) : (
+            <>
               <Link
                 href={`/polls/${poll.id}/edit`}
                 className="btn text-xs font-normal text-neutral-600 py-0"
@@ -89,6 +102,7 @@ export default function Footer({ poll }: FooterProps) {
               </Link>
               <SubmitButton
                 className="btn text-xs font-normal text-neutral-600 py-0 ml-2"
+                formAction={closePollFormAction}
                 onClick={e =>
                   confirm('Do you want to close and conclude this poll?')
                     ? undefined
@@ -97,10 +111,10 @@ export default function Footer({ poll }: FooterProps) {
               >
                 Conclude this poll
               </SubmitButton>
-            </div>
-          </form>
-        )}
-      </div>
+            </>
+          )}
+        </div>
+      </form>
     </div>
   );
 }
