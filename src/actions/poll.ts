@@ -54,19 +54,23 @@ export async function updatePollAction(
   _prevState: ActionResult,
   formData: FormData,
 ): Promise<ActionResult<PollForm, Poll> | never> {
-  const parsedFormData = parseFormData(formData);
+  const pollFormData = pollFormSchema.safeParse(parseFormData(formData));
 
-  const validatedFormData = pollFormSchema.safeParse(parsedFormData);
+  if (!pollFormData.success) {
+    return { validationErrors: pollFormData.error.flatten() };
+  }
 
-  if (!validatedFormData.success) {
-    return { validationErrors: validatedFormData.error.flatten() };
+  const poll = await getPoll(pollFormData.data.pollId);
+
+  if (poll?.closed) {
+    return { serverError: 'Poll closed' };
   }
 
   const pollId = await updatePoll(
-    validatedFormData.data.pollId,
-    validatedFormData.data.title,
-    validatedFormData.data.description,
-    validatedFormData.data.options,
+    pollFormData.data.pollId,
+    pollFormData.data.title,
+    pollFormData.data.description,
+    pollFormData.data.options,
   );
 
   revalidatePath('/polls/[pollId]', 'page');
@@ -87,7 +91,9 @@ export async function addParticipantAction(
 
   const poll = await getPoll(participantFormData.data.pollId);
 
-  if (poll && poll.participants.length >= MAX_PARTICIPANTS) {
+  if (poll?.closed) {
+    return { serverError: 'Poll closed' };
+  } else if (poll && poll.participants.length >= MAX_PARTICIPANTS) {
     return { serverError: 'Max participants reached' };
   }
 
@@ -114,6 +120,12 @@ export async function updateParticipantAction(
     return { validationErrors: participantFormData.error.flatten() };
   }
 
+  const poll = await getPoll(participantFormData.data.pollId);
+
+  if (poll?.closed) {
+    return { serverError: 'Poll closed' };
+  }
+
   await updateParticipant(
     participantFormData.data.pollId,
     participantFormData.data.participantId,
@@ -135,6 +147,12 @@ export async function deleteParticipantAction(
 
   if (!participantFormData.success) {
     return { validationErrors: participantFormData.error.flatten() };
+  }
+
+  const poll = await getPoll(participantFormData.data.pollId);
+
+  if (poll?.closed) {
+    return { serverError: 'Poll closed' };
   }
 
   const success = await deleteParticipant(
