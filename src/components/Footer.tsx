@@ -36,9 +36,13 @@ export default function Footer({ poll }: FooterProps) {
   return (
     <div className="flex justify-between mt-10">
       <div className="w-1/2">
-        <h2 className="mb-2">Share this poll</h2>
+        <h2 className="mb-2">
+          {poll.closed ? 'Share poll results' : 'Share this poll'}
+        </h2>
         <div className="mb-2 text-sm">
-          Share the link below with friends so they can participate in the poll:
+          {poll.closed
+            ? 'Share the link below with friends so they can see the results:'
+            : 'Share the link below with friends so they can participate:'}
         </div>
         <div className="flex items-stretch h-9 gap-1">
           <div className="flex flex-1 items-center border rounded-md border-gray-300 shadow-sm">
@@ -65,13 +69,17 @@ export default function Footer({ poll }: FooterProps) {
         </div>
       </div>
       <div>
+        <h2 className="mb-2">
+          {poll.closed ? 'Poll concluded' : 'Poll controls'}
+        </h2>
+        <div className="mb-2 text-sm">
+          {poll.closed
+            ? 'This poll is now closed, thank you for participating.'
+            : 'This poll is still open for voting, you can:'}
+        </div>
         {!poll.closed && (
           <form action={formAction}>
             <input name="pollId" type="hidden" value={poll.id} />
-            <h2 className="mb-2">Poll status</h2>
-            <div className="mb-2 text-sm">
-              This poll is still open for voting. You can:
-            </div>
             <div className="flex items-stretch h-9">
               <Link
                 href={`/polls/${poll.id}/edit`}
@@ -82,7 +90,7 @@ export default function Footer({ poll }: FooterProps) {
               <SubmitButton
                 className="btn text-xs font-normal text-neutral-600 py-0 ml-2"
                 onClick={e =>
-                  confirm('Do you want to conclude and close this poll?')
+                  confirm('Do you want to close and conclude this poll?')
                     ? undefined
                     : e.preventDefault()
                 }
