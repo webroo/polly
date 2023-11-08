@@ -16,7 +16,7 @@ export default function ParticipantRow({
   poll,
   participant,
 }: ParticipantRowProps) {
-  const [_formState, formAction] = useFormState(deleteParticipantAction, {});
+  const [, formAction] = useFormState(deleteParticipantAction, {});
 
   return (
     <div className="table-row">
@@ -26,7 +26,7 @@ export default function ParticipantRow({
         <div className="table-cell px-2.5 py-2">
           <span className="font-bold">{participant.name}</span>
           {!poll.closed && (
-            <span className="text-sm text-gray-600 ml-1">
+            <span className="text-xs text-gray-600 ml-1.5">
               <Link
                 href={`/polls/${poll.id}/participants/${participant.id}/edit`}
               >
@@ -36,9 +36,8 @@ export default function ParticipantRow({
               <SubmitButton
                 className="link"
                 onClick={e =>
-                  confirm('Do you want to delete this response?')
-                    ? undefined
-                    : e.preventDefault()
+                  !confirm('Do you want to delete this response?') &&
+                  e.preventDefault()
                 }
               >
                 Delete

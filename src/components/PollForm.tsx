@@ -36,7 +36,7 @@ export default function PollForm({ pollTitle, editPoll }: PollFormProps) {
       <div className="grid gap-6">
         <div>
           <label htmlFor="title" className="block mb-2">
-            Name of your poll
+            What do you want to organise?
           </label>
           <input
             name="title"

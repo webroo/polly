@@ -85,9 +85,8 @@ export default function Footer({ poll }: FooterProps) {
               className="btn text-xs font-normal text-neutral-600 py-0"
               formAction={reopenPollFormAction}
               onClick={e =>
-                confirm('Do you want to reopen this poll?')
-                  ? undefined
-                  : e.preventDefault()
+                !confirm('Do you want to reopen this poll?') &&
+                e.preventDefault()
               }
             >
               Reopen this poll
@@ -104,9 +103,8 @@ export default function Footer({ poll }: FooterProps) {
                 className="btn text-xs font-normal text-neutral-600 py-0 ml-2"
                 formAction={closePollFormAction}
                 onClick={e =>
-                  confirm('Do you want to close and conclude this poll?')
-                    ? undefined
-                    : e.preventDefault()
+                  !confirm('Do you want to close and conclude this poll?') &&
+                  e.preventDefault()
                 }
               >
                 Conclude this poll

@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import Link from 'next/link';
 import clsx from 'clsx';
 import { notFound } from 'next/navigation';
 import { getPoll } from '@/services/poll';

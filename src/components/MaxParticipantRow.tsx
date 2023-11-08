@@ -10,7 +10,7 @@ export interface MaxParticipantRowProps {
 }
 
 export default function MaxParticipantRow({ poll }: MaxParticipantRowProps) {
-  const [_formState, formAction] = useFormState(closePollAction, {});
+  const [, formAction] = useFormState(closePollAction, {});
 
   return (
     <div className="table-row relative h-24 bg-gray-500/5 outline outline-2 outline-gray-800 outline-offset-[-1px]">
@@ -26,9 +26,8 @@ export default function MaxParticipantRow({ poll }: MaxParticipantRowProps) {
               <SubmitButton
                 className="btn-primary py-2"
                 onClick={e =>
-                  confirm('Do you want to conclude and close this poll?')
-                    ? undefined
-                    : e.preventDefault()
+                  !confirm('Do you want to conclude and close this poll?') &&
+                  e.preventDefault()
                 }
               >
                 Conclude Poll
