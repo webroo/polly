@@ -21,13 +21,17 @@ export async function createPoll(
   description: string,
   options: PollOption[],
 ): Promise<string> {
+  const now = new Date();
+
   const poll: Poll = {
     id: uniqueid(),
     title,
     description,
-    closed: false,
     participants: [],
     options: options.map(option => ({ ...option, id: uniqueid() })),
+    closed: false,
+    createdAt: now,
+    updatedAt: now,
   };
 
   await (await connectDB())
@@ -48,12 +52,17 @@ export async function updatePoll(
     id: option.id || uniqueid(),
   }));
 
-  await (await connectDB())
-    .collection('polls')
-    .updateOne(
-      { id: pollId },
-      { $set: { title, description, options: optionsWithIds } },
-    );
+  await (await connectDB()).collection('polls').updateOne(
+    { id: pollId },
+    {
+      $set: {
+        title,
+        description,
+        options: optionsWithIds,
+        updatedAt: new Date(),
+      },
+    },
+  );
 
   return pollId;
 }
@@ -69,9 +78,13 @@ export async function addParticipant(
     selectedOptions,
   };
 
-  await (await connectDB())
-    .collection('polls')
-    .updateOne({ id: pollId }, { $push: { participants: participant } });
+  await (await connectDB()).collection('polls').updateOne(
+    { id: pollId },
+    {
+      $push: { participants: participant },
+      $set: { updatedAt: new Date() },
+    },
+  );
 
   return participant;
 }
@@ -94,6 +107,7 @@ export async function updateParticipant(
       $set: {
         'participants.$.name': participant.name,
         'participants.$.selectedOptions': participant.selectedOptions,
+        updatedAt: new Date(),
       },
     },
   );
@@ -105,28 +119,41 @@ export async function deleteParticipant(
   pollId: string,
   participantId: string,
 ): Promise<boolean> {
-  await (await connectDB())
-    .collection('polls')
-    .updateOne(
-      { id: pollId },
-      { $pull: { participants: { id: participantId } } },
-    );
+  await (await connectDB()).collection('polls').updateOne(
+    { id: pollId },
+    {
+      $pull: { participants: { id: participantId } },
+      $set: { updatedAt: new Date() },
+    },
+  );
 
   return true;
 }
 
 export async function closePoll(pollId: string): Promise<boolean> {
-  await (await connectDB())
-    .collection('polls')
-    .updateOne({ id: pollId }, { $set: { closed: true } });
+  await (await connectDB()).collection('polls').updateOne(
+    { id: pollId },
+    {
+      $set: {
+        closed: true,
+        updatedAt: new Date(),
+      },
+    },
+  );
 
   return true;
 }
 
 export async function reopenPoll(pollId: string): Promise<boolean> {
-  await (await connectDB())
-    .collection('polls')
-    .updateOne({ id: pollId }, { $set: { closed: false } });
+  await (await connectDB()).collection('polls').updateOne(
+    { id: pollId },
+    {
+      $set: {
+        closed: false,
+        updatedAt: new Date(),
+      },
+    },
+  );
 
   return true;
 }

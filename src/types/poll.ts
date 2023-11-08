@@ -5,6 +5,8 @@ export interface Poll {
   options: PollOption[];
   participants: PollParticipant[];
   closed: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface PollOption {
