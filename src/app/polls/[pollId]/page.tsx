@@ -27,15 +27,14 @@ export default async function PollPage({ params }: PollPageProps) {
 
   return (
     <>
-      <div
-        className={clsx(
-          'flex items-start justify-between gap-3',
-          poll.description ? 'mb-5' : 'mb-10',
+      <div className="text-center">
+        <h1 className={clsx(poll.description ? 'mb-5' : 'mb-10')}>
+          {poll.title}
+        </h1>
+        {poll.description && (
+          <h2 className=" ml-0.5 mb-8">{poll.description}</h2>
         )}
-      >
-        <h1>{poll.title}</h1>
       </div>
-      {poll.description && <h2 className="ml-0.5 mb-8">{poll.description}</h2>}
       <PollTable poll={poll} />
       <Footer poll={poll} />
     </>

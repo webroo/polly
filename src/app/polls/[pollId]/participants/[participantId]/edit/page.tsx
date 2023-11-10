@@ -42,22 +42,14 @@ export default async function EditParticipantPage({
 
   return (
     <>
-      <div
-        className={clsx(
-          'flex items-start justify-between gap-3',
-          poll.description ? 'mb-5' : 'mb-10',
-        )}
-      >
-        <h1>{poll.title}</h1>
-        {!poll.closed && (
-          <div>
-            <Link href={`/polls/${poll.id}/edit`} className="btn">
-              Edit this poll
-            </Link>
-          </div>
+      <div className="text-center">
+        <h1 className={clsx(poll.description ? 'mb-5' : 'mb-10')}>
+          {poll.title}
+        </h1>
+        {poll.description && (
+          <h2 className=" ml-0.5 mb-8">{poll.description}</h2>
         )}
       </div>
-      {poll.description && <h2 className="ml-0.5 mb-8">{poll.description}</h2>}
       <PollTable poll={poll} editParticipant={editParticipant} />
       <Footer poll={poll} />
     </>
