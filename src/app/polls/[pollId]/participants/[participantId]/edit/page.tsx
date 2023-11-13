@@ -41,7 +41,7 @@ export default async function EditParticipantPage({
   }
 
   return (
-    <>
+    <main>
       <div className="text-center">
         <h1 className={clsx(poll.description ? 'mb-5' : 'mb-10')}>
           {poll.title}
@@ -52,6 +52,6 @@ export default async function EditParticipantPage({
       </div>
       <PollTable poll={poll} editParticipant={editParticipant} />
       <Footer poll={poll} />
-    </>
+    </main>
   );
 }

@@ -1,3 +1,17 @@
+import Image from 'next/image';
+
+export function ParrotIcon({ size }: { size: number }) {
+  return (
+    <Image
+      src="/parrot.png"
+      alt="A green cartoon parrot smiling and waving a wing."
+      width={size}
+      height={size}
+      unoptimized
+    />
+  );
+}
+
 export function CheckIcon() {
   return (
     <svg

@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
-import clsx from 'clsx';
 import { notFound } from 'next/navigation';
+import clsx from 'clsx';
 import { getPoll } from '@/services/poll';
 import PollTable from '@/components/PollTable';
 import Footer from '@/components/Footer';
@@ -26,7 +26,7 @@ export default async function PollPage({ params }: PollPageProps) {
   }
 
   return (
-    <>
+    <main>
       <div className="text-center">
         <h1 className={clsx(poll.description ? 'mb-5' : 'mb-10')}>
           {poll.title}
@@ -37,6 +37,6 @@ export default async function PollPage({ params }: PollPageProps) {
       </div>
       <PollTable poll={poll} />
       <Footer poll={poll} />
-    </>
+    </main>
   );
 }

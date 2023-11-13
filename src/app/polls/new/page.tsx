@@ -11,7 +11,7 @@ interface NewPollPageProps {
 
 export default async function NewPollPage({ searchParams }: NewPollPageProps) {
   return (
-    <>
+    <main>
       <h1 className="mb-4">Create a new poll</h1>
       {searchParams.title && (
         <h2 className="mb-5">
@@ -19,6 +19,6 @@ export default async function NewPollPage({ searchParams }: NewPollPageProps) {
         </h2>
       )}
       <PollForm pollTitle={searchParams.title} />
-    </>
+    </main>
   );
 }

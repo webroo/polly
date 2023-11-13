@@ -28,9 +28,9 @@ export default async function EditPollPage({ params }: EditPollPageProps) {
   }
 
   return (
-    <>
+    <main>
       <h1 className="mb-5">Edit your poll</h1>
       <PollForm editPoll={poll} />
-    </>
+    </main>
   );
 }
