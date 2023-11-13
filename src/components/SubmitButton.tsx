@@ -1,12 +1,16 @@
-import { ButtonHTMLAttributes, PropsWithChildren } from 'react';
+import { ButtonHTMLAttributes, ReactNode } from 'react';
 import { useFormStatus } from 'react-dom';
+
+interface SubmitButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: ReactNode;
+}
 
 export default function SubmitButton({
   children,
   onClick,
   className,
   ...props
-}: PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>) {
+}: SubmitButtonProps) {
   const { pending } = useFormStatus();
 
   return (

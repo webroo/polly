@@ -1,6 +1,7 @@
+import { ReactNode } from 'react';
 import { ParrotIcon } from '@/components/Icons';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="flex flex-col h-full">
       <div className="flex-1">{children}</div>
