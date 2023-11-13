@@ -14,7 +14,7 @@ export async function generateMetadata({
 }: PollPageProps): Promise<Metadata> {
   const poll = await getPoll(params.pollId);
   return {
-    title: `Polly: ${poll?.title}`,
+    title: poll?.title,
   };
 }
 

@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import PollForm from '@/components/PollForm';
 
 export const metadata: Metadata = {
-  title: 'Polly: Create a new poll',
+  title: 'Create a new poll',
 };
 
 interface NewPollPageProps {
