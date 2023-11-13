@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { notFound, redirect } from 'next/navigation';
 import { getPoll } from '@/services/poll';
 import PollTable from '@/components/PollTable';
-import Footer from '@/components/Footer';
+import PollControls from '@/components/PollControls';
 
 interface EditParticipantPageProps {
   params: { pollId: string; participantId: string };
@@ -51,7 +51,7 @@ export default async function EditParticipantPage({
         )}
       </div>
       <PollTable poll={poll} editParticipant={editParticipant} />
-      <Footer poll={poll} />
+      <PollControls poll={poll} />
     </main>
   );
 }

@@ -13,11 +13,11 @@ import {
   LinkIcon,
 } from '@/components/Icons';
 
-export interface FooterProps {
+export interface PollControlsProps {
   poll: Poll;
 }
 
-export default function Footer({ poll }: FooterProps) {
+export default function PollControls({ poll }: PollControlsProps) {
   const [pageUrl, setPageUrl] = useState('');
   const [copied, setCopied] = useState(false);
 
