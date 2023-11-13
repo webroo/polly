@@ -31,7 +31,7 @@ export default function UpdateParticipantRow({
   }, [formState.data]);
 
   return (
-    <div className="table-row relative h-36 bg-gray-500/5 outline outline-2 outline-gray-800 outline-offset-[-1px]">
+    <div className="table-row relative translate-x-0 h-36 bg-gray-500/5 outline outline-2 outline-gray-800 outline-offset-[-1px]">
       <form
         action={formAction}
         ref={formRef}
@@ -49,7 +49,7 @@ export default function UpdateParticipantRow({
             defaultValue={participant?.name}
             className="w-full"
           />
-          <div className="absolute left-[20rem] right-8 p-2 bg-white rounded-md border border-gray-300 shadow-md">
+          <div className="absolute top-[4.6rem] left-[20rem] right-8 p-2 bg-white rounded-md border border-gray-300 shadow-md">
             {participant ? (
               <div className="text-center">
                 <span className="font-serif italic mr-2">

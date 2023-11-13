@@ -13,7 +13,7 @@ export default function MaxParticipantRow({ poll }: MaxParticipantRowProps) {
   const [, formAction] = useFormState(closePollAction, {});
 
   return (
-    <div className="table-row relative h-24 bg-gray-500/5 outline outline-2 outline-gray-800 outline-offset-[-1px]">
+    <div className="table-row relative translate-x-0 h-24 bg-gray-500/5 outline outline-2 outline-gray-800 outline-offset-[-1px]">
       <form action={formAction} className="contents divide-x divide-gray-300">
         <input name="pollId" type="hidden" value={poll.id} />
         <div className="table-cell px-2.5 py-2 align-top">
