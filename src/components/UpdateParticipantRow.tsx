@@ -7,7 +7,7 @@ import { addParticipantAction, updateParticipantAction } from '@/actions/poll';
 import { flattenValidationErrors } from '@/lib/zod';
 import { Poll, PollParticipant } from '@/types/poll';
 import SubmitButton from '@/components/SubmitButton';
-import ErrorAlert from '@/components/ErrorAlert';
+import { ErrorAlert } from '@/components/Alerts';
 
 export interface UpdateParticipantRowProps {
   poll: Poll;

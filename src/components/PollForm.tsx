@@ -5,7 +5,7 @@ import { useFormState } from 'react-dom';
 import Link from 'next/link';
 import { createPollAction, updatePollAction } from '@/actions/poll';
 import SubmitButton from '@/components/SubmitButton';
-import ErrorAlert from '@/components/ErrorAlert';
+import { ErrorAlert } from '@/components/Alerts';
 import { Poll } from '@/types/poll';
 import { flattenValidationErrors } from '@/lib/zod';
 

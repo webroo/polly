@@ -7,7 +7,7 @@ export interface ErrorAlertProps extends HTMLAttributes<HTMLDivElement> {
   messages?: string[];
 }
 
-export default function ErrorAlert({
+export function ErrorAlert({
   title,
   messages,
   className,
