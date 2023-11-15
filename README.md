@@ -1,10 +1,21 @@
-# Polly
+<p align="center">
+  <a href="https://polly-poll.vercel.app">
+    <img src="public/parrot.png" alt="A green cartoon parrot smiling and waving a wing." width="100" height="100">
+  </a>
+</p>
+<p align="center">A polling app for scheduling events.</p>
 
-Polly helps you schedule events with your friends and colleagues.
+## Description
+
+Polly is a simple and easy to use polling app that helps you schedule events - Decide what you want to organise, suggest some dates, then let participants vote on the options that work best for them.
+
+[Try it out for yourself](https://polly-poll.vercel.app)
+
+## Background
 
 An experiment in using [React Server Components](https://vercel.com/blog/understanding-react-server-components) and [Server Actions](https://vercel.com/blog/understanding-react-server-components#server-actions-react%E2%80%99s-first-steps-into-mutability). Built using [Next.js](https://nextjs.org/) and [MongoDB](https://www.mongodb.com/).
 
-Server Components and Actions allow the site to be fully functional even with JavaScript disabled.
+Server Components and Sever Actions allow the site to be fully functional even with JavaScript disabled.
 
 ## Prerequisites
 
