@@ -4,7 +4,7 @@ import { useFormStatus } from 'react-dom';
 interface SubmitButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   submittingText?: string;
-  spinner: boolean;
+  spinner?: boolean;
 }
 
 export default function SubmitButton({
