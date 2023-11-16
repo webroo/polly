@@ -51,12 +51,12 @@ export default function PollTable({ poll, editParticipant }: PollTableProps) {
             />
           ),
         )}
-        {!poll.closed && (
+        {!poll.closed && !editParticipant && (
           <>
             {poll.participants.length >= MAX_PARTICIPANTS ? (
               <MaxParticipantRow poll={poll} />
             ) : (
-              !editParticipant && <UpdateParticipantRow poll={poll} />
+              <UpdateParticipantRow poll={poll} />
             )}
           </>
         )}
