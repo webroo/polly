@@ -31,6 +31,7 @@
 
   a {
     @apply text-green-600 underline;
+    @apply focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600;
   }
 
   label {
@@ -61,6 +62,7 @@
     @apply px-4 py-2.5;
     @apply text-black text-sm font-semibold no-underline;
     @apply bg-white hover:bg-gray-50 rounded-md shadow-sm ring-1 ring-inset ring-gray-300;
+    @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600;
     @apply disabled:hover:bg-white;
   }
 
@@ -75,5 +77,6 @@
 
   .link {
     @apply underline text-green-600;
+    @apply focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600;
   }
 }
