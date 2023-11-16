@@ -8,7 +8,7 @@ export default async function HomePage() {
         method="GET"
         className="flex flex-col items-center text-center mb-14"
       >
-        <div className="mt-1 mb-5">
+        <div className="mt-1 mb-7">
           <ParrotIcon size={128} />
         </div>
         <label htmlFor="title" className="block mb-5 text-4xl">
