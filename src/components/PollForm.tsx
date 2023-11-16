@@ -93,13 +93,16 @@ export default function PollForm({ pollTitle, editPoll }: PollFormProps) {
               </button>
             )}
           </div>
-          <div>
+          <div className="flex">
             {editPoll && (
               <Link href={`/polls/${editPoll.id}`} className="btn mr-4">
                 Cancel
               </Link>
             )}
-            <SubmitButton>
+            <SubmitButton
+              spinner
+              submittingText={editPoll ? 'Saving...' : 'Creating...'}
+            >
               {editPoll ? 'Save Changes' : 'Create Poll'}
             </SubmitButton>
           </div>

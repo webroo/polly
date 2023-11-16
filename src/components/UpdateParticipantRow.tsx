@@ -51,11 +51,15 @@ export default function UpdateParticipantRow({
           />
           <div className="absolute top-[4.6rem] left-[20rem] right-8 p-2 bg-white rounded-md border border-gray-300 shadow-md">
             {participant ? (
-              <div className="text-center">
+              <div className="flex items-center justify-center">
                 <span className="font-serif italic mr-2">
                   Update your details and
                 </span>
-                <SubmitButton className="btn-primary py-2">
+                <SubmitButton
+                  spinner
+                  submittingText="Saving..."
+                  className="btn-primary py-2"
+                >
                   Save Changes
                 </SubmitButton>
                 <span className="font-serif italic mx-2">or</span>
@@ -64,11 +68,15 @@ export default function UpdateParticipantRow({
                 </Link>
               </div>
             ) : (
-              <div className="text-center">
+              <div className="flex items-center justify-center">
                 <span className="font-serif italic mr-2">
                   Enter your name, select your options and
                 </span>
-                <SubmitButton className="btn-primary py-2">
+                <SubmitButton
+                  spinner
+                  submittingText="Submitting..."
+                  className="btn-primary py-2"
+                >
                   Submit Response
                 </SubmitButton>
               </div>
