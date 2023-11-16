@@ -16,7 +16,14 @@ export default function MaxParticipantRow({ poll }: MaxParticipantRowProps) {
     <div className="table-row relative translate-x-0 h-24 bg-gray-500/5 outline outline-2 outline-gray-800 outline-offset-[-1px]">
       <form action={formAction} className="contents divide-x divide-gray-300">
         <input name="pollId" type="hidden" value={poll.id} />
-        <div className="table-cell px-2.5 py-2 align-top">
+        <div className="table-cell px-2.5 py-2 align-top"></div>
+        {poll.options.map(option => (
+          <div
+            key={option.id}
+            className="table-cell px-2.5 py-2 pt-8 text-center"
+          ></div>
+        ))}
+        <div className="table-cell w-0 border-none">
           <div className="absolute left-8 right-8 top-5 p-2 bg-white rounded-md border border-gray-300 shadow-md">
             <div className="text-center">
               <span className="font-serif italic mr-2">
@@ -35,12 +42,6 @@ export default function MaxParticipantRow({ poll }: MaxParticipantRowProps) {
             </div>
           </div>
         </div>
-        {poll.options.map(option => (
-          <div
-            key={option.id}
-            className="table-cell px-2.5 py-2 pt-8 text-center"
-          ></div>
-        ))}
       </form>
     </div>
   );

@@ -49,6 +49,21 @@ export default function UpdateParticipantRow({
             defaultValue={participant?.name}
             className="w-full"
           />
+        </div>
+        {poll.options.map(option => (
+          <div
+            key={option.id}
+            className="table-cell px-2.5 py-2 pt-8 text-center"
+          >
+            <input
+              type="checkbox"
+              name="selectedOptions[]"
+              value={option.id}
+              defaultChecked={participant?.selectedOptions.includes(option.id)}
+            />
+          </div>
+        ))}
+        <div className="table-cell w-0 border-none">
           <div className="absolute top-[4.6rem] left-[20rem] right-8 p-2 bg-white rounded-md border border-gray-300 shadow-md">
             {participant ? (
               <div className="flex items-center justify-center">
@@ -90,19 +105,6 @@ export default function UpdateParticipantRow({
             )}
           </div>
         </div>
-        {poll.options.map(option => (
-          <div
-            key={option.id}
-            className="table-cell px-2.5 py-2 pt-8 text-center"
-          >
-            <input
-              type="checkbox"
-              name="selectedOptions[]"
-              value={option.id}
-              defaultChecked={participant?.selectedOptions.includes(option.id)}
-            />
-          </div>
-        ))}
       </form>
     </div>
   );

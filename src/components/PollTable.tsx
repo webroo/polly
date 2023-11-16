@@ -32,6 +32,7 @@ export default function PollTable({ poll, editParticipant }: PollTableProps) {
               {option.name}
             </div>
           ))}
+          <div className="table-cell w-0 border-none"></div>
         </div>
       </div>
       <div className="table-row-group divide-y divide-gray-300">
@@ -74,6 +75,7 @@ export default function PollTable({ poll, editParticipant }: PollTableProps) {
               {value}
             </div>
           ))}
+          <div className="table-cell w-0 border-none"></div>
         </div>
       </div>
     </div>

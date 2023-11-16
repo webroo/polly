@@ -57,6 +57,7 @@ export default function ParticipantRow({
             )}
           </div>
         ))}
+        <div className="table-cell w-0 border-none"></div>
       </form>
     </div>
   );
