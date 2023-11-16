@@ -71,3 +71,7 @@ VSCode can be configured to automatically fix and format files on save by adding
 ```
 
 Note: In this project Prettier is run _through_ ESLint, so you don't need to have the Prettier VSCode extension installed.
+
+## Credits
+
+[Parrot icon by Freepik - Flaticon](https://www.flaticon.com/free-icons/parrot)
