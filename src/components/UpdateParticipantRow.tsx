@@ -78,7 +78,11 @@ export default function UpdateParticipantRow({
                   Save Changes
                 </SubmitButton>
                 <span className="font-serif italic mx-2">or</span>
-                <Link href={`/polls/${poll.id}`} className="btn py-2">
+                <Link
+                  href={`/polls/${poll.id}`}
+                  scroll={false}
+                  className="btn py-2"
+                >
                   Cancel
                 </Link>
               </div>

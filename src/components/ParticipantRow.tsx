@@ -29,6 +29,7 @@ export default function ParticipantRow({
             <span className="text-xs text-gray-600 ml-1.5">
               <Link
                 href={`/polls/${poll.id}/participants/${participant.id}/edit`}
+                scroll={false}
               >
                 Edit
               </Link>{' '}
