@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { UNIQUE_ID_SIZE } from '@/lib/uniqueid';
 
-export const MAX_PARTICIPANTS = 30;
+export const MAX_PARTICIPANTS = 40;
 
 export const pollFormSchema = z.object({
   pollId: z.union([z.string().length(0), z.string().length(UNIQUE_ID_SIZE)]),
@@ -9,11 +9,11 @@ export const pollFormSchema = z.object({
     .string()
     .trim()
     .min(1, 'Please enter a name for your poll')
-    .max(50, 'The name of your poll is too long'),
+    .max(55, 'The name of your poll is too long'),
   description: z
     .string()
     .trim()
-    .max(100, 'The additional information is too long'),
+    .max(110, 'The additional information is too long'),
   options: z
     .array(
       z.object({
@@ -21,7 +21,7 @@ export const pollFormSchema = z.object({
         name: z
           .string()
           .trim()
-          .max(50, 'One or more of your options is too long'),
+          .max(40, 'One or more of your options is too long'),
       }),
     )
     .transform(options => options.filter(option => Boolean(option.name)))
@@ -39,7 +39,7 @@ export const addParticipantFormSchema = z.object({
     .string()
     .trim()
     .min(1, 'Please enter your name')
-    .max(40, 'The name you entered is too long'),
+    .max(45, 'The name you entered is too long'),
   selectedOptions: z.array(z.string().length(UNIQUE_ID_SIZE)).default([]),
 });
 
