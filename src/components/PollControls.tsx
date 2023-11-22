@@ -48,7 +48,7 @@ export default function PollControls({ poll }: PollControlsProps) {
             <input
               value={shareUrl}
               readOnly
-              className="flex-1 pl-2 py-0 text-sm border-none shadow-none focus:outline-none"
+              className="flex-1 px-1 py-0 text-sm border-none shadow-none focus:outline-none"
               onClick={event => (event.target as HTMLInputElement).select()}
             />
           </div>
