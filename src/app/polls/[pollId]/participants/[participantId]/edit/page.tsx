@@ -43,7 +43,7 @@ export default async function EditParticipantPage({
     <main>
       <PollTitle title={poll.title} description={poll.description} />
       <PollTable poll={poll} editParticipant={editParticipant} />
-      <PollControls poll={poll} shareUrl={''} />
+      <PollControls poll={poll} />
     </main>
   );
 }

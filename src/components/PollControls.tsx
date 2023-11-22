@@ -15,22 +15,21 @@ import {
 
 export interface PollControlsProps {
   poll: Poll;
-  shareUrl: string;
 }
 
-export default function PollControls({ poll, shareUrl }: PollControlsProps) {
+export default function PollControls({ poll }: PollControlsProps) {
   const [copied, setCopied] = useState(false);
 
   const [, closePollFormAction] = useFormState(closePollAction, {});
   const [, reopenPollFormAction] = useFormState(reopenPollAction, {});
 
+  const shareUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/polls/${poll.id}`;
+
   function copyLink() {
-    navigator.clipboard.writeText(pageUrl);
+    navigator.clipboard.writeText(shareUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
   }
-
-  const pageUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/polls/${poll.id}`;
 
   return (
     <div className="flex justify-between mt-10">
@@ -66,19 +65,6 @@ export default function PollControls({ poll, shareUrl }: PollControlsProps) {
             {copied ? <ClipboardCheckedIcon /> : <ClipboardListIcon />}
           </button>
         </div>
-        <div>
-          process.env.NEXT_PUBLIC_VERCEL_ENV:
-          {process.env.NEXT_PUBLIC_VERCEL_ENV}
-        </div>
-        <div>
-          process.env.NEXT_PUBLIC_BASE_URL:{process.env.NEXT_PUBLIC_BASE_URL}
-        </div>
-        <div>
-          process.env.NEXT_PUBLIC_VERCEL_URL:
-          {process.env.NEXT_PUBLIC_VERCEL_URL}
-        </div>
-        <div>shareUrl: {shareUrl}</div>
-        <div>pageUrl: {pageUrl}</div>
       </div>
       <form>
         <input name="pollId" type="hidden" value={poll.id} />
