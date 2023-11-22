@@ -15,9 +15,10 @@ import {
 
 export interface PollControlsProps {
   poll: Poll;
+  shareUrl: string;
 }
 
-export default function PollControls({ poll }: PollControlsProps) {
+export default function PollControls({ poll, shareUrl }: PollControlsProps) {
   const [copied, setCopied] = useState(false);
 
   const [, closePollFormAction] = useFormState(closePollAction, {});
@@ -46,7 +47,7 @@ export default function PollControls({ poll }: PollControlsProps) {
           <div className="flex flex-1 items-center border rounded-md border-gray-300 shadow-sm">
             <LinkIcon />
             <input
-              value={pageUrl}
+              value={shareUrl}
               readOnly
               className="flex-1 pl-2 py-0 text-sm border-none shadow-none focus:outline-none"
               onClick={event => (event.target as HTMLInputElement).select()}
@@ -76,6 +77,8 @@ export default function PollControls({ poll }: PollControlsProps) {
           process.env.NEXT_PUBLIC_VERCEL_URL:
           {process.env.NEXT_PUBLIC_VERCEL_URL}
         </div>
+        <div>shareUrl: {shareUrl}</div>
+        <div>pageUrl: {pageUrl}</div>
       </div>
       <form>
         <input name="pollId" type="hidden" value={poll.id} />
