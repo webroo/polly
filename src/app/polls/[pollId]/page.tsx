@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { getPoll } from '@/services/poll';
 import PollTable from '@/components/PollTable';
@@ -26,18 +25,11 @@ export default async function PollPage({ params }: PollPageProps) {
     notFound();
   }
 
-  const host = headers().get('host');
-  console.log(`host:`, host);
-  const protocol = process.env.NODE_ENV === 'development' ? `http` : 'https';
-  console.log(`protocol:`, protocol);
-  const shareUrl = `${protocol}://${host}/polls/${poll.id}`;
-  console.log(`shareUrl:`, shareUrl);
-
   return (
     <main>
       <PollTitle title={poll.title} description={poll.description} />
       <PollTable poll={poll} />
-      <PollControls poll={poll} shareUrl={shareUrl} />
+      <PollControls poll={poll} />
     </main>
   );
 }
