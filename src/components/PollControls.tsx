@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useFormState } from 'react-dom';
 import Link from 'next/link';
 import clsx from 'clsx';
@@ -18,7 +18,6 @@ export interface PollControlsProps {
 }
 
 export default function PollControls({ poll }: PollControlsProps) {
-  const [pageUrl, setPageUrl] = useState('');
   const [copied, setCopied] = useState(false);
 
   const [, closePollFormAction] = useFormState(closePollAction, {});
@@ -30,9 +29,7 @@ export default function PollControls({ poll }: PollControlsProps) {
     setTimeout(() => setCopied(false), 1500);
   }
 
-  useEffect(() => {
-    setPageUrl(`${window.location.origin}/polls/${poll.id}`);
-  }, [poll]);
+  const pageUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/polls/${poll.id}`;
 
   return (
     <div className="flex justify-between mt-10">
@@ -67,6 +64,17 @@ export default function PollControls({ poll }: PollControlsProps) {
             </span>
             {copied ? <ClipboardCheckedIcon /> : <ClipboardListIcon />}
           </button>
+        </div>
+        <div>
+          process.env.NEXT_PUBLIC_VERCEL_ENV:
+          {process.env.NEXT_PUBLIC_VERCEL_ENV}
+        </div>
+        <div>
+          process.env.NEXT_PUBLIC_BASE_URL:{process.env.NEXT_PUBLIC_BASE_URL}
+        </div>
+        <div>
+          process.env.NEXT_PUBLIC_VERCEL_URL:
+          {process.env.NEXT_PUBLIC_VERCEL_URL}
         </div>
       </div>
       <form>
