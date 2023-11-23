@@ -100,6 +100,12 @@ export default function UpdateParticipantRow({
                 </SubmitButton>
               </div>
             )}
+            {formState.serverError && (
+              <ErrorAlert
+                title="Sorry, there was a problem saving your response, please try again"
+                className="mt-2"
+              />
+            )}
             {formState.validationErrors && (
               <ErrorAlert
                 title="Oops, there were errors with your submission"

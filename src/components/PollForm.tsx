@@ -25,6 +25,12 @@ export default function PollForm({ pollTitle, editPoll }: PollFormProps) {
 
   return (
     <form action={formAction}>
+      {formState.serverError && (
+        <ErrorAlert
+          title="Sorry, there was a problem saving your poll, please try again"
+          className="mb-4"
+        />
+      )}
       {formState.validationErrors && (
         <ErrorAlert
           title="Oops, there were errors with your submission"
