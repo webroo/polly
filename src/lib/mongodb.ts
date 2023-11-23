@@ -33,3 +33,10 @@ export async function connectDB(): Promise<Db> {
     return mongoDbPromise;
   }
 }
+
+export class DocumentNotFoundError extends Error {
+  constructor() {
+    super('DocumentNotFound');
+    Object.setPrototypeOf(this, DocumentNotFoundError.prototype);
+  }
+}

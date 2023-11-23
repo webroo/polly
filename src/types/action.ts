@@ -1,7 +1,14 @@
 import { typeToFlattenedError } from 'zod';
 
-export interface ActionResult<InputSchema = any, ResultData = any> {
-  data?: ResultData;
+export interface ActionResult<TFormDataSchema = any, TResultData = any> {
+  data?: TResultData;
   serverError?: string;
-  validationErrors?: typeToFlattenedError<InputSchema>;
+  validationErrors?: typeToFlattenedError<TFormDataSchema>;
+}
+
+export interface ActionHandler<TFormDataSchema, TResultData> {
+  (
+    prevState: ActionResult<TFormDataSchema, TResultData>,
+    formData: FormData,
+  ): Promise<ActionResult<TFormDataSchema, TResultData>>;
 }

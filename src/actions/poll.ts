@@ -3,8 +3,9 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { PollParticipant, Poll } from '@/types/poll';
-import { ActionResult } from '@/types/action';
+import { ActionHandler } from '@/types/action';
 import { parseFormData } from '@/lib/formdata';
+import { actionErrorHandler } from '@/lib/action';
 import {
   pollFormSchema,
   addParticipantFormSchema,
@@ -30,57 +31,53 @@ import {
   reopenPoll,
 } from '@/services/poll';
 
-export async function createPollAction(
-  _prevState: ActionResult,
-  formData: FormData,
-): Promise<ActionResult<PollForm, Poll> | never> {
-  const pollFormData = pollFormSchema.safeParse(parseFormData(formData));
+export const createPollAction: ActionHandler<PollForm, Poll> =
+  actionErrorHandler(async (_prevState, formData) => {
+    const pollFormData = pollFormSchema.safeParse(parseFormData(formData));
 
-  if (!pollFormData.success) {
-    return { validationErrors: pollFormData.error.flatten() };
-  }
+    if (!pollFormData.success) {
+      return { validationErrors: pollFormData.error.flatten() };
+    }
 
-  const pollId = await createPoll(
-    pollFormData.data.title,
-    pollFormData.data.description,
-    pollFormData.data.options,
-  );
+    const pollId = await createPoll(
+      pollFormData.data.title,
+      pollFormData.data.description,
+      pollFormData.data.options,
+    );
 
-  revalidatePath('/polls/[pollId]', 'page');
-  redirect(`/polls/${pollId}`);
-}
+    revalidatePath('/polls/[pollId]', 'page');
+    redirect(`/polls/${pollId}`);
+  });
 
-export async function updatePollAction(
-  _prevState: ActionResult,
-  formData: FormData,
-): Promise<ActionResult<PollForm, Poll> | never> {
-  const pollFormData = pollFormSchema.safeParse(parseFormData(formData));
+export const updatePollAction: ActionHandler<PollForm, Poll> =
+  actionErrorHandler(async (_prevState, formData) => {
+    const pollFormData = pollFormSchema.safeParse(parseFormData(formData));
 
-  if (!pollFormData.success) {
-    return { validationErrors: pollFormData.error.flatten() };
-  }
+    if (!pollFormData.success) {
+      return { validationErrors: pollFormData.error.flatten() };
+    }
 
-  const poll = await getPoll(pollFormData.data.pollId);
+    const poll = await getPoll(pollFormData.data.pollId);
 
-  if (poll?.closed) {
-    return { serverError: 'Poll closed' };
-  }
+    if (poll?.closed) {
+      return { serverError: 'Poll closed' };
+    }
 
-  const pollId = await updatePoll(
-    pollFormData.data.pollId,
-    pollFormData.data.title,
-    pollFormData.data.description,
-    pollFormData.data.options,
-  );
+    const pollId = await updatePoll(
+      pollFormData.data.pollId,
+      pollFormData.data.title,
+      pollFormData.data.description,
+      pollFormData.data.options,
+    );
 
-  revalidatePath('/polls/[pollId]', 'page');
-  redirect(`/polls/${pollId}`);
-}
+    revalidatePath('/polls/[pollId]', 'page');
+    redirect(`/polls/${pollId}`);
+  });
 
-export async function addParticipantAction(
-  _prevState: ActionResult,
-  formData: FormData,
-): Promise<ActionResult<AddParticipantForm, PollParticipant>> {
+export const addParticipantAction: ActionHandler<
+  AddParticipantForm,
+  PollParticipant
+> = actionErrorHandler(async (_prevState, formData) => {
   const participantFormData = addParticipantFormSchema.safeParse(
     parseFormData(formData),
   );
@@ -106,12 +103,12 @@ export async function addParticipantAction(
   revalidatePath('/polls/[pollId]', 'page');
 
   return { data: participant };
-}
+});
 
-export async function updateParticipantAction(
-  _prevState: ActionResult,
-  formData: FormData,
-): Promise<ActionResult<EditParticipantForm, PollParticipant> | never> {
+export const updateParticipantAction: ActionHandler<
+  EditParticipantForm,
+  PollParticipant
+> = actionErrorHandler(async (_prevState, formData) => {
   const participantFormData = editParticipantFormSchema.safeParse(
     parseFormData(formData),
   );
@@ -135,12 +132,12 @@ export async function updateParticipantAction(
 
   revalidatePath('/polls/[pollId]', 'page');
   redirect(`/polls/${participantFormData.data.pollId}`);
-}
+});
 
-export async function deleteParticipantAction(
-  _prevState: ActionResult,
-  formData: FormData,
-): Promise<ActionResult<DeleteParticipantForm, boolean>> {
+export const deleteParticipantAction: ActionHandler<
+  DeleteParticipantForm,
+  boolean
+> = actionErrorHandler(async (_prevState, formData) => {
   const participantFormData = deleteParticipantFormSchema.safeParse(
     parseFormData(formData),
   );
@@ -163,38 +160,36 @@ export async function deleteParticipantAction(
   revalidatePath('/polls/[pollId]', 'page');
 
   return { data: success };
-}
+});
 
-export async function closePollAction(
-  _prevState: ActionResult,
-  formData: FormData,
-): Promise<ActionResult<ClosePollForm, boolean>> {
-  const pollFormData = closePollFormSchema.safeParse(parseFormData(formData));
+export const closePollAction: ActionHandler<ClosePollForm, boolean> =
+  actionErrorHandler(async (_prevState, formData) => {
+    const pollFormData = closePollFormSchema.safeParse(parseFormData(formData));
 
-  if (!pollFormData.success) {
-    return { validationErrors: pollFormData.error.flatten() };
-  }
+    if (!pollFormData.success) {
+      return { validationErrors: pollFormData.error.flatten() };
+    }
 
-  const success = await closePoll(pollFormData.data.pollId);
+    const success = await closePoll(pollFormData.data.pollId);
 
-  revalidatePath('/polls/[pollId]', 'page');
+    revalidatePath('/polls/[pollId]', 'page');
 
-  return { data: success };
-}
+    return { data: success };
+  });
 
-export async function reopenPollAction(
-  _prevState: ActionResult,
-  formData: FormData,
-): Promise<ActionResult<ClosePollForm, boolean>> {
-  const pollFormData = reopenPollFormSchema.safeParse(parseFormData(formData));
+export const reopenPollAction: ActionHandler<ClosePollForm, boolean> =
+  actionErrorHandler(async (_prevState, formData) => {
+    const pollFormData = reopenPollFormSchema.safeParse(
+      parseFormData(formData),
+    );
 
-  if (!pollFormData.success) {
-    return { validationErrors: pollFormData.error.flatten() };
-  }
+    if (!pollFormData.success) {
+      return { validationErrors: pollFormData.error.flatten() };
+    }
 
-  const success = await reopenPoll(pollFormData.data.pollId);
+    const success = await reopenPoll(pollFormData.data.pollId);
 
-  revalidatePath('/polls/[pollId]', 'page');
+    revalidatePath('/polls/[pollId]', 'page');
 
-  return { data: success };
-}
+    return { data: success };
+  });

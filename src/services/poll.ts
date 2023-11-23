@@ -1,5 +1,5 @@
 import { cache } from 'react';
-import { connectDB } from '@/lib/mongodb';
+import { DocumentNotFoundError, connectDB } from '@/lib/mongodb';
 import { uniqueid } from '@/lib/uniqueid';
 import { PollParticipant, Poll, PollOption } from '@/types/poll';
 
@@ -27,9 +27,9 @@ export async function createPoll(
     updatedAt: now,
   };
 
-  await (await connectDB())
-    .collection('polls')
-    .insertOne(poll, { forceServerObjectId: true });
+  const db = await connectDB();
+
+  await db.collection('polls').insertOne(poll, { forceServerObjectId: true });
 
   return poll.id;
 }
@@ -45,7 +45,9 @@ export async function updatePoll(
     id: option.id || uniqueid(),
   }));
 
-  await (await connectDB()).collection('polls').updateOne(
+  const db = await connectDB();
+
+  const result = await db.collection('polls').updateOne(
     { id: pollId },
     {
       $set: {
@@ -56,6 +58,10 @@ export async function updatePoll(
       },
     },
   );
+
+  if (result.matchedCount === 0) {
+    throw new DocumentNotFoundError();
+  }
 
   return pollId;
 }
@@ -71,13 +77,19 @@ export async function addParticipant(
     selectedOptions,
   };
 
-  await (await connectDB()).collection('polls').updateOne(
+  const db = await connectDB();
+
+  const result = await db.collection('polls').updateOne(
     { id: pollId },
     {
       $push: { participants: participant },
       $set: { updatedAt: new Date() },
     },
   );
+
+  if (result.matchedCount === 0) {
+    throw new DocumentNotFoundError();
+  }
 
   return participant;
 }
@@ -94,7 +106,9 @@ export async function updateParticipant(
     selectedOptions,
   };
 
-  await (await connectDB()).collection('polls').updateOne(
+  const db = await connectDB();
+
+  const result = await db.collection('polls').updateOne(
     { id: pollId, 'participants.id': participant.id },
     {
       $set: {
@@ -105,6 +119,10 @@ export async function updateParticipant(
     },
   );
 
+  if (result.matchedCount === 0) {
+    throw new DocumentNotFoundError();
+  }
+
   return participant;
 }
 
@@ -112,7 +130,9 @@ export async function deleteParticipant(
   pollId: string,
   participantId: string,
 ): Promise<boolean> {
-  await (await connectDB()).collection('polls').updateOne(
+  const db = await connectDB();
+
+  const result = await db.collection('polls').updateOne(
     { id: pollId },
     {
       $pull: { participants: { id: participantId } },
@@ -120,11 +140,17 @@ export async function deleteParticipant(
     },
   );
 
+  if (result.matchedCount === 0) {
+    throw new DocumentNotFoundError();
+  }
+
   return true;
 }
 
 export async function closePoll(pollId: string): Promise<boolean> {
-  await (await connectDB()).collection('polls').updateOne(
+  const db = await connectDB();
+
+  const result = await db.collection('polls').updateOne(
     { id: pollId },
     {
       $set: {
@@ -134,11 +160,17 @@ export async function closePoll(pollId: string): Promise<boolean> {
     },
   );
 
+  if (result.matchedCount === 0) {
+    throw new DocumentNotFoundError();
+  }
+
   return true;
 }
 
 export async function reopenPoll(pollId: string): Promise<boolean> {
-  await (await connectDB()).collection('polls').updateOne(
+  const db = await connectDB();
+
+  const result = await db.collection('polls').updateOne(
     { id: pollId },
     {
       $set: {
@@ -147,6 +179,10 @@ export async function reopenPoll(pollId: string): Promise<boolean> {
       },
     },
   );
+
+  if (result.matchedCount === 0) {
+    throw new DocumentNotFoundError();
+  }
 
   return true;
 }
