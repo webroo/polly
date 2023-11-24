@@ -2,6 +2,7 @@ import { cache } from 'react';
 import { DocumentNotFoundError, connectDB } from '@/lib/mongodb';
 import { uniqueid } from '@/lib/uniqueid';
 import { PollParticipant, Poll, PollOption } from '@/types/poll';
+import { MAX_PARTICIPANTS } from '@/schemas/poll';
 
 export const getPoll = cache(async (id: string): Promise<Poll | null> => {
   return (await connectDB())
@@ -48,7 +49,7 @@ export async function updatePoll(
   const db = await connectDB();
 
   const result = await db.collection('polls').updateOne(
-    { id: pollId },
+    { id: pollId, closed: { $eq: false } },
     {
       $set: {
         title,
@@ -80,7 +81,11 @@ export async function addParticipant(
   const db = await connectDB();
 
   const result = await db.collection('polls').updateOne(
-    { id: pollId },
+    {
+      id: pollId,
+      closed: { $eq: false },
+      $expr: { $lt: [{ $size: '$participants' }, MAX_PARTICIPANTS] },
+    },
     {
       $push: { participants: participant },
       $set: { updatedAt: new Date() },
@@ -109,7 +114,11 @@ export async function updateParticipant(
   const db = await connectDB();
 
   const result = await db.collection('polls').updateOne(
-    { id: pollId, 'participants.id': participant.id },
+    {
+      id: pollId,
+      closed: { $eq: false },
+      'participants.id': participant.id,
+    },
     {
       $set: {
         'participants.$.name': participant.name,
@@ -133,7 +142,7 @@ export async function deleteParticipant(
   const db = await connectDB();
 
   const result = await db.collection('polls').updateOne(
-    { id: pollId },
+    { id: pollId, closed: { $eq: false } },
     {
       $pull: { participants: { id: participantId } },
       $set: { updatedAt: new Date() },

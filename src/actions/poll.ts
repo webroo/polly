@@ -15,7 +15,6 @@ import {
   EditParticipantForm,
   AddParticipantForm,
   PollForm,
-  MAX_PARTICIPANTS,
   ClosePollForm,
   closePollFormSchema,
   reopenPollFormSchema,
@@ -26,7 +25,6 @@ import {
   deleteParticipant,
   updatePoll,
   updateParticipant,
-  getPoll,
   closePoll,
   reopenPoll,
 } from '@/services/poll';
@@ -57,12 +55,6 @@ export const updatePollAction: ActionHandler<PollForm, Poll> =
       return { validationErrors: pollFormData.error.flatten() };
     }
 
-    const poll = await getPoll(pollFormData.data.pollId);
-
-    if (poll?.closed) {
-      return { serverError: 'Poll closed' };
-    }
-
     const pollId = await updatePoll(
       pollFormData.data.pollId,
       pollFormData.data.title,
@@ -84,14 +76,6 @@ export const addParticipantAction: ActionHandler<
 
   if (!participantFormData.success) {
     return { validationErrors: participantFormData.error.flatten() };
-  }
-
-  const poll = await getPoll(participantFormData.data.pollId);
-
-  if (poll?.closed) {
-    return { serverError: 'Poll closed' };
-  } else if (poll && poll.participants.length >= MAX_PARTICIPANTS) {
-    return { serverError: 'Max participants reached' };
   }
 
   const participant = await addParticipant(
@@ -117,12 +101,6 @@ export const updateParticipantAction: ActionHandler<
     return { validationErrors: participantFormData.error.flatten() };
   }
 
-  const poll = await getPoll(participantFormData.data.pollId);
-
-  if (poll?.closed) {
-    return { serverError: 'Poll closed' };
-  }
-
   await updateParticipant(
     participantFormData.data.pollId,
     participantFormData.data.participantId,
@@ -144,12 +122,6 @@ export const deleteParticipantAction: ActionHandler<
 
   if (!participantFormData.success) {
     return { validationErrors: participantFormData.error.flatten() };
-  }
-
-  const poll = await getPoll(participantFormData.data.pollId);
-
-  if (poll?.closed) {
-    return { serverError: 'Poll closed' };
   }
 
   const success = await deleteParticipant(
