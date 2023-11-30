@@ -15,7 +15,7 @@ Polly is a simple and easy to use polling app that helps you schedule events - D
 
 An experiment in using [React Server Components](https://vercel.com/blog/understanding-react-server-components) and [Server Actions](https://vercel.com/blog/understanding-react-server-components#server-actions-react%E2%80%99s-first-steps-into-mutability). Built using [Next.js](https://nextjs.org/) and [MongoDB](https://www.mongodb.com/).
 
-Server Components and Sever Actions allow the site to be fully functional even with JavaScript disabled.
+Server Components and Sever Actions allow the site to be functional even with JavaScript disabled.
 
 ## Prerequisites
 
@@ -45,6 +45,10 @@ Server Components and Sever Actions allow the site to be fully functional even w
     `npm run dev`
 
 6. Open [http://localhost:3000](http://localhost:3000) to see the site.
+
+## Deployment
+
+The GitHub project is not directly connected to the Vercel project and instead artifacts are built using GitHub Actions and deployed onto Vercel infrastructure using their CLI tool. Production env vars are defined in the Vercel project settings and MongoDB Atlas is configured as a Vercel project integration.
 
 ## MongoDB admin interface
 
