@@ -11,11 +11,11 @@ import {
   addParticipantFormSchema,
   editParticipantFormSchema,
   deleteParticipantFormSchema,
-  DeleteParticipantForm,
-  EditParticipantForm,
-  AddParticipantForm,
-  PollForm,
-  ClosePollForm,
+  DeleteParticipantFormSchema,
+  EditParticipantFormSchema,
+  AddParticipantFormSchema,
+  PollFormSchema,
+  ClosePollFormSchema,
   closePollFormSchema,
   reopenPollFormSchema,
 } from '@/schemas/poll';
@@ -29,7 +29,7 @@ import {
   reopenPoll,
 } from '@/services/poll';
 
-export const createPollAction: ActionHandler<PollForm, Poll> =
+export const createPollAction: ActionHandler<PollFormSchema, Poll> =
   actionErrorHandler(async (_prevState, formData) => {
     const pollFormData = pollFormSchema.safeParse(parseFormData(formData));
 
@@ -47,7 +47,7 @@ export const createPollAction: ActionHandler<PollForm, Poll> =
     redirect(`/polls/${pollId}`);
   });
 
-export const updatePollAction: ActionHandler<PollForm, Poll> =
+export const updatePollAction: ActionHandler<PollFormSchema, Poll> =
   actionErrorHandler(async (_prevState, formData) => {
     const pollFormData = pollFormSchema.safeParse(parseFormData(formData));
 
@@ -67,7 +67,7 @@ export const updatePollAction: ActionHandler<PollForm, Poll> =
   });
 
 export const addParticipantAction: ActionHandler<
-  AddParticipantForm,
+  AddParticipantFormSchema,
   PollParticipant
 > = actionErrorHandler(async (_prevState, formData) => {
   const participantFormData = addParticipantFormSchema.safeParse(
@@ -90,7 +90,7 @@ export const addParticipantAction: ActionHandler<
 });
 
 export const updateParticipantAction: ActionHandler<
-  EditParticipantForm,
+  EditParticipantFormSchema,
   PollParticipant
 > = actionErrorHandler(async (_prevState, formData) => {
   const participantFormData = editParticipantFormSchema.safeParse(
@@ -113,7 +113,7 @@ export const updateParticipantAction: ActionHandler<
 });
 
 export const deleteParticipantAction: ActionHandler<
-  DeleteParticipantForm,
+  DeleteParticipantFormSchema,
   boolean
 > = actionErrorHandler(async (_prevState, formData) => {
   const participantFormData = deleteParticipantFormSchema.safeParse(
@@ -134,7 +134,7 @@ export const deleteParticipantAction: ActionHandler<
   return { data: success };
 });
 
-export const closePollAction: ActionHandler<ClosePollForm, boolean> =
+export const closePollAction: ActionHandler<ClosePollFormSchema, boolean> =
   actionErrorHandler(async (_prevState, formData) => {
     const pollFormData = closePollFormSchema.safeParse(parseFormData(formData));
 
@@ -149,7 +149,7 @@ export const closePollAction: ActionHandler<ClosePollForm, boolean> =
     return { data: success };
   });
 
-export const reopenPollAction: ActionHandler<ClosePollForm, boolean> =
+export const reopenPollAction: ActionHandler<ClosePollFormSchema, boolean> =
   actionErrorHandler(async (_prevState, formData) => {
     const pollFormData = reopenPollFormSchema.safeParse(
       parseFormData(formData),

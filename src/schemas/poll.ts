@@ -60,8 +60,12 @@ export const reopenPollFormSchema = z.object({
   pollId: z.string().length(UNIQUE_ID_SIZE),
 });
 
-export type PollForm = z.infer<typeof pollFormSchema>;
-export type AddParticipantForm = z.infer<typeof addParticipantFormSchema>;
-export type EditParticipantForm = z.infer<typeof editParticipantFormSchema>;
-export type DeleteParticipantForm = z.infer<typeof deleteParticipantFormSchema>;
-export type ClosePollForm = z.infer<typeof closePollFormSchema>;
+export type PollFormSchema = z.infer<typeof pollFormSchema>;
+export type ClosePollFormSchema = z.infer<typeof closePollFormSchema>;
+export type AddParticipantFormSchema = z.infer<typeof addParticipantFormSchema>;
+export type EditParticipantFormSchema = z.infer<
+  typeof editParticipantFormSchema
+>;
+export type DeleteParticipantFormSchema = z.infer<
+  typeof deleteParticipantFormSchema
+>;
