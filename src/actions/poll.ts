@@ -124,14 +124,14 @@ export const deleteParticipantAction: ActionHandler<
     return { validationErrors: participantFormData.error.flatten() };
   }
 
-  const success = await deleteParticipant(
+  await deleteParticipant(
     participantFormData.data.pollId,
     participantFormData.data.participantId,
   );
 
   revalidatePath('/polls/[pollId]', 'page');
 
-  return { data: success };
+  return { data: true };
 });
 
 export const closePollAction: ActionHandler<ClosePollFormSchema, boolean> =
@@ -142,11 +142,11 @@ export const closePollAction: ActionHandler<ClosePollFormSchema, boolean> =
       return { validationErrors: pollFormData.error.flatten() };
     }
 
-    const success = await closePoll(pollFormData.data.pollId);
+    await closePoll(pollFormData.data.pollId);
 
     revalidatePath('/polls/[pollId]', 'page');
 
-    return { data: success };
+    return { data: true };
   });
 
 export const reopenPollAction: ActionHandler<ClosePollFormSchema, boolean> =
@@ -159,9 +159,9 @@ export const reopenPollAction: ActionHandler<ClosePollFormSchema, boolean> =
       return { validationErrors: pollFormData.error.flatten() };
     }
 
-    const success = await reopenPoll(pollFormData.data.pollId);
+    await reopenPoll(pollFormData.data.pollId);
 
     revalidatePath('/polls/[pollId]', 'page');
 
-    return { data: success };
+    return { data: true };
   });
