@@ -10,7 +10,7 @@ import { ActionHandler } from '@/types/action';
  * enabled browser then the error is re-thrown on the client-side, however in a
  * javascript-disabled browser the POST request that executes the action will
  * fail and return a 500. Using this function ensures an ActionResult is provided
- * in both circumstances.
+ * in both circumstances instead.
  *
  * @param action An action handler function
  * @returns A function that executes the provided action
